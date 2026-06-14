@@ -154,6 +154,7 @@ const evidenceIcon = document.querySelector("#evidenceIcon");
 const evidenceType = document.querySelector("#evidenceType");
 const evidenceTitle = document.querySelector("#evidenceTitle");
 const evidenceText = document.querySelector("#evidenceText");
+let suppressHotspotUntil = 0;
 
 document.querySelector("#newGameButton").addEventListener("click", () => startCase(0));
 document.querySelector("#closePlaceButton").addEventListener("click", closePlace);
@@ -161,15 +162,8 @@ document.querySelector("#quizCloseButton").addEventListener("click", closeQuiz);
 document.querySelector("#evidenceCloseButton").addEventListener("click", closeEvidence);
 clueHotspot.addEventListener("click", inspectCurrent);
 suspectActor.addEventListener("click", hearCurrent);
-clueDiscovery.addEventListener("click", (event) => {
-  event.stopPropagation();
-  event.preventDefault();
-  hideClueDiscovery();
-});
-clueDiscovery.addEventListener("pointerup", (event) => {
-  event.stopPropagation();
-  event.preventDefault();
-  hideClueDiscovery();
+["pointerdown", "touchstart", "click"].forEach((eventName) => {
+  clueDiscovery.addEventListener(eventName, dismissClueDiscovery, { passive: false });
 });
 placeBubble.addEventListener("click", () => {
   placeBubble.hidden = true;
@@ -415,9 +409,11 @@ function closePlace() {
 }
 
 function inspectCurrent() {
+  if (Date.now() < suppressHotspotUntil) return;
+
   const suspect = currentSuspect();
   if (isClueDiscoveryOpen()) {
-    hideClueDiscovery();
+    dismissClueDiscovery();
     return;
   }
   if (game.items.has(suspect.id)) {
@@ -444,11 +440,22 @@ function showPlaceBubble(title, text) {
 function showClueDiscovery(title, text) {
   const location = currentLocation();
   positionClueDiscovery(location);
-  clueDiscovery.innerHTML = `<strong>${title}</strong>${text}<span class="dismiss-hint">이 카드를 누르면 닫혀요</span>`;
+  clueDiscovery.innerHTML = `<strong>${title}</strong>${text}<span class="dismiss-hint">탭하면 닫혀요</span>`;
   clueDiscovery.hidden = false;
   clueDiscovery.style.display = "block";
+  clueDiscovery.style.pointerEvents = "auto";
   clueDiscovery.classList.remove("is-hidden");
   clueDiscovery.setAttribute("aria-hidden", "false");
+}
+
+function dismissClueDiscovery(event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.stopImmediatePropagation) event.stopImmediatePropagation();
+  }
+  suppressHotspotUntil = Date.now() + 500;
+  hideClueDiscovery();
 }
 
 function openQuiz(suspect, location) {
@@ -501,6 +508,7 @@ function showHintItem(suspect) {
 function hideClueDiscovery() {
   clueDiscovery.hidden = true;
   clueDiscovery.style.display = "none";
+  clueDiscovery.style.pointerEvents = "none";
   clueDiscovery.classList.add("is-hidden");
   clueDiscovery.classList.remove("item");
   clueDiscovery.setAttribute("aria-hidden", "true");
