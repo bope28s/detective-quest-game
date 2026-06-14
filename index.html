@@ -77,11 +77,21 @@
       </div>
     </section>
 
-    <section class="evidence-popup" id="evidencePopup" aria-label="새 단서" hidden>
+    <section class="quiz-popup" id="quizPopup" aria-label="힌트 아이템 퀴즈" hidden>
+      <div class="quiz-card">
+        <p class="eyebrow">힌트 아이템 퀴즈</p>
+        <h2 id="quizTitle"></h2>
+        <p id="quizQuestion"></p>
+        <div class="quiz-options" id="quizOptions"></div>
+        <button class="action-button" id="quizCloseButton" type="button">조금 더 둘러보기</button>
+      </div>
+    </section>
+
+    <section class="evidence-popup" id="evidencePopup" aria-label="게임 알림" hidden>
       <div class="evidence-card">
         <div class="evidence-icon" id="evidenceIcon">!</div>
         <div>
-          <p class="eyebrow" id="evidenceType">새 단서</p>
+          <p class="eyebrow" id="evidenceType">게임 알림</p>
           <h2 id="evidenceTitle"></h2>
           <p id="evidenceText"></p>
         </div>

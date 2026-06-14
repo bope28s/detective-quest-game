@@ -453,6 +453,7 @@ h1 {
   background: rgba(36, 48, 68, 0.48);
 }
 
+.quiz-popup,
 .evidence-popup {
   position: fixed;
   z-index: 30;
@@ -463,13 +464,14 @@ h1 {
   background: rgba(36, 48, 68, 0.34);
 }
 
+.quiz-popup[hidden],
 .evidence-popup[hidden] {
   display: none;
 }
 
+.quiz-card,
 .evidence-card {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
   gap: 14px;
   width: min(560px, 100%);
   padding: 18px;
@@ -480,8 +482,27 @@ h1 {
   animation: cluePop 220ms ease-out;
 }
 
+.evidence-card {
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
 .evidence-card .action-button {
   grid-column: 1 / -1;
+}
+
+.quiz-card h2 {
+  margin-bottom: 0;
+}
+
+.quiz-card p {
+  margin-bottom: 0;
+  color: #4c5871;
+  line-height: 1.45;
+}
+
+.quiz-options {
+  display: grid;
+  gap: 9px;
 }
 
 .evidence-icon {
@@ -657,6 +678,11 @@ h1 {
   animation: discoveryIn 220ms ease-out;
 }
 
+.clue-discovery.item {
+  border-color: rgba(95, 193, 120, 0.95);
+  background: rgba(242, 255, 246, 0.97);
+}
+
 .clue-discovery::after {
   content: "";
   position: absolute;
@@ -710,6 +736,48 @@ h1 {
   background: #f7f8fb;
   color: #4c5871;
   font-weight: 900;
+}
+
+.item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: #f7f8fb;
+  font-weight: 900;
+}
+
+.item-row span {
+  color: #60708c;
+  font-size: 0.82rem;
+}
+
+.candidate-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.candidate-chip {
+  padding: 7px 8px;
+  border-radius: 999px;
+  background: #f7f8fb;
+  font-size: 0.82rem;
+  font-weight: 900;
+  text-align: center;
+}
+
+.candidate-chip.out {
+  color: #6f7c91;
+  text-decoration: line-through;
+  opacity: 0.62;
+}
+
+.candidate-chip.hot {
+  background: #fff4f2;
+  color: #ad3e36;
 }
 
 .case-progress {
