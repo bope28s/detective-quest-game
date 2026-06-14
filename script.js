@@ -163,8 +163,13 @@ clueHotspot.addEventListener("click", inspectCurrent);
 suspectActor.addEventListener("click", hearCurrent);
 clueDiscovery.addEventListener("click", (event) => {
   event.stopPropagation();
-  clueDiscovery.hidden = true;
-  clueDiscovery.classList.remove("item");
+  event.preventDefault();
+  hideClueDiscovery();
+});
+clueDiscovery.addEventListener("pointerup", (event) => {
+  event.stopPropagation();
+  event.preventDefault();
+  hideClueDiscovery();
 });
 placeBubble.addEventListener("click", () => {
   placeBubble.hidden = true;
@@ -395,7 +400,7 @@ function openPlace(location) {
   if (placeBubble.hidden) {
     placeBubble.innerHTML = `<strong>${location.name}에 들어왔어요</strong>주변을 살펴보고 ${suspect.name}에게 말을 걸어 보세요.`;
   }
-  if (clueDiscovery.hidden) {
+  if (!isClueDiscoveryOpen()) {
     positionClueDiscovery(location);
   }
 
@@ -406,14 +411,13 @@ function openPlace(location) {
 function closePlace() {
   placeView.hidden = true;
   placeBubble.hidden = true;
-  clueDiscovery.hidden = true;
-  clueDiscovery.classList.remove("item");
+  hideClueDiscovery();
 }
 
 function inspectCurrent() {
   const suspect = currentSuspect();
-  if (!clueDiscovery.hidden) {
-    clueDiscovery.hidden = true;
+  if (isClueDiscoveryOpen()) {
+    hideClueDiscovery();
     return;
   }
   if (game.items.has(suspect.id)) {
@@ -440,8 +444,11 @@ function showPlaceBubble(title, text) {
 function showClueDiscovery(title, text) {
   const location = currentLocation();
   positionClueDiscovery(location);
-  clueDiscovery.innerHTML = `<strong>${title}</strong>${text}<span class="dismiss-hint">다시 누르면 닫혀요</span>`;
+  clueDiscovery.innerHTML = `<strong>${title}</strong>${text}<span class="dismiss-hint">이 카드를 누르면 닫혀요</span>`;
   clueDiscovery.hidden = false;
+  clueDiscovery.style.display = "block";
+  clueDiscovery.classList.remove("is-hidden");
+  clueDiscovery.setAttribute("aria-hidden", "false");
 }
 
 function openQuiz(suspect, location) {
@@ -489,6 +496,18 @@ function showHintItem(suspect) {
   const text = game.case.item(suspect, currentCulprit());
   showClueDiscovery(`${suspect.token} 획득`, text);
   clueDiscovery.classList.add("item");
+}
+
+function hideClueDiscovery() {
+  clueDiscovery.hidden = true;
+  clueDiscovery.style.display = "none";
+  clueDiscovery.classList.add("is-hidden");
+  clueDiscovery.classList.remove("item");
+  clueDiscovery.setAttribute("aria-hidden", "true");
+}
+
+function isClueDiscoveryOpen() {
+  return !clueDiscovery.hidden && !clueDiscovery.classList.contains("is-hidden") && clueDiscovery.style.display !== "none";
 }
 
 function positionClueDiscovery(location) {

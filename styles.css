@@ -685,6 +685,10 @@ h1 {
   display: none;
 }
 
+.clue-discovery.is-hidden {
+  display: none !important;
+}
+
 .clue-discovery.item {
   border-color: rgba(95, 193, 120, 0.95);
   background: rgba(242, 255, 246, 0.97);
