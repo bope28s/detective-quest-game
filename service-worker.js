@@ -1,4 +1,4 @@
-const CACHE_NAME = "detective-quest-game-v11";
+const CACHE_NAME = "detective-quest-game-v12";
 const APP_ASSETS = [
   "./",
   "./index.html",
@@ -12,6 +12,25 @@ const APP_ASSETS = [
   "./assets/toy-maker.png",
   "./assets/clock-keeper.png",
   "./assets/star-badge.png",
+  "./assets/case1-intro.png",
+  "./assets/case1-success.png",
+  "./assets/case1-fail.png",
+  "./assets/case2-intro.png",
+  "./assets/case2-success.png",
+  "./assets/case2-fail.png",
+  "./assets/case2-security.png",
+  "./assets/case2-curator.png",
+  "./assets/case2-cafe-owner.png",
+  "./assets/case2-violinist.png",
+  "./assets/case2-janitor.png",
+  "./assets/case3-intro.png",
+  "./assets/case3-success.png",
+  "./assets/case3-fail.png",
+  "./assets/case3-biologist.png",
+  "./assets/case3-kayak-coach.png",
+  "./assets/case3-weather-watcher.png",
+  "./assets/case3-photographer.png",
+  "./assets/case3-cook.png",
   "./assets/icon-192.png",
   "./assets/icon-512.png",
 ];

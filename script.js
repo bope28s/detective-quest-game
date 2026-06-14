@@ -1,4 +1,4 @@
-const locations = [
+const starLocations = [
   {
     id: "bakery",
     name: "별빛 빵집",
@@ -61,7 +61,7 @@ const locations = [
   },
 ];
 
-const suspects = [
+const starSuspects = [
   { id: "baker", name: "루루 제빵사", job: "쿠키를 굽는 빵집 주인", img: "assets/baker.png", home: "bakery", token: "별 모양 밀가루" },
   { id: "librarian", name: "모모 사서", job: "책을 정리하는 도서관 사서", img: "assets/librarian.png", home: "library", token: "무지개 책갈피" },
   { id: "gardener", name: "초록 정원사", job: "공원을 돌보는 정원사", img: "assets/gardener.png", home: "park", token: "초록 물뿌리개 자국" },
@@ -76,7 +76,14 @@ const cases = [
     level: "쉬움",
     name: "사라진 별 배지",
     title: "시계탑의 별 배지가 사라졌어요!",
-    intro: "장소마다 한 사람씩 만나 보세요. 단서가 아주 직접적으로 범인을 알려줄 거예요.",
+    image: "assets/case1-intro.png",
+    mapImg: "assets/quest-map.png",
+    introImg: "assets/case1-intro.png",
+    successImg: "assets/case1-success.png",
+    failImg: "assets/case1-fail.png",
+    locations: starLocations,
+    suspects: starSuspects,
+    intro: "시계탑 축제 아침, 반짝이던 별 배지가 사라졌어요. 장소마다 한 사람씩 만나 보세요. 단서가 아주 직접적으로 범인을 알려줄 거예요.",
     success: "정답이에요! 별 배지를 되찾았어요. 이제 조금 더 어려운 두 번째 사건이 열립니다.",
     item(suspect, culprit) {
       if (suspect.id === culprit.id) {
@@ -92,31 +99,207 @@ const cases = [
     },
   },
   {
-    id: "puppet",
+    id: "museum-night",
     label: "두 번째 사건",
     level: "조금 어려움",
-    name: "인형극 속 가짜 사건",
-    title: "무대 위 탐정 인형이 쓰러졌어요!",
-    intro: "무서운 진짜 사건이 아니라 인형극 장난 사건이에요. 이번에는 단서와 알리바이를 함께 생각해야 해요.",
-    success: "멋져요! 인형극 사건도 해결했어요. 반짝별 탐정단의 오늘 사건이 모두 끝났습니다.",
+    name: "밤의 박물관 사건",
+    title: "달빛 박물관에서 관장이 쓰러진 채 발견됐어요",
+    image: "assets/case2-intro.png",
+    mapImg: "assets/case2-intro.png",
+    introImg: "assets/case2-intro.png",
+    successImg: "assets/case2-success.png",
+    failImg: "assets/case2-fail.png",
+    locations: [
+      {
+        id: "night-gallery",
+        name: "달빛 전시실",
+        icon: "◆",
+        x: 24,
+        y: 58,
+        focus: "42% 48%",
+        clueSpot: [40, 66],
+        actorSpot: [68, 52],
+        intro: "깨진 유리 진열장 주변에 작은 흔적이 남아 있어요.",
+        quiz: { question: "전시실 바닥의 반짝이는 조각은 무엇과 가장 관련 있을까요?", options: ["유리 조각", "조개껍데기", "빵 봉투"], answer: "유리 조각" },
+      },
+      {
+        id: "security-room",
+        name: "보안실",
+        icon: "●",
+        x: 42,
+        y: 35,
+        focus: "62% 44%",
+        clueSpot: [35, 58],
+        actorSpot: [66, 50],
+        intro: "꺼진 CCTV 화면 옆에 시간표가 비뚤어져 있어요.",
+        quiz: { question: "보안실에서 시간을 확인하는 데 가장 중요한 것은?", options: ["CCTV 기록", "요리책", "물뿌리개"], answer: "CCTV 기록" },
+      },
+      {
+        id: "museum-cafe",
+        name: "야간 카페",
+        icon: "▲",
+        x: 62,
+        y: 68,
+        focus: "50% 60%",
+        clueSpot: [48, 70],
+        actorSpot: [67, 51],
+        intro: "계산대 아래에 구겨진 영수증 한 장이 보여요.",
+        quiz: { question: "카페에서 손님이 있었는지 알 수 있는 흔적은?", options: ["영수증", "바이올린 줄", "나침반"], answer: "영수증" },
+      },
+      {
+        id: "museum-plaza",
+        name: "박물관 앞 광장",
+        icon: "★",
+        x: 78,
+        y: 48,
+        focus: "70% 52%",
+        clueSpot: [44, 62],
+        actorSpot: [66, 48],
+        intro: "가로등 아래에 낡은 악보 조각이 떨어져 있어요.",
+        quiz: { question: "광장에서 연주자와 이어질 수 있는 물건은?", options: ["악보 조각", "청소 열쇠", "연구 노트"], answer: "악보 조각" },
+      },
+      {
+        id: "service-hall",
+        name: "직원 복도",
+        icon: "■",
+        x: 86,
+        y: 24,
+        focus: "58% 36%",
+        clueSpot: [50, 63],
+        actorSpot: [68, 48],
+        intro: "바닥에 젖은 대걸레 자국과 작은 열쇠 흔적이 남아 있어요.",
+        quiz: { question: "직원 복도에서 문을 열고 닫은 흔적과 가장 가까운 것은?", options: ["열쇠 고리", "카메라 렌즈", "간식 바구니"], answer: "열쇠 고리" },
+      },
+    ],
+    suspects: [
+      { id: "security", name: "한별 보안요원", job: "야간 보안실을 지키는 요원", img: "assets/case2-security.png", home: "security-room", token: "꺼진 CCTV 시간표" },
+      { id: "curator", name: "서윤 큐레이터", job: "전시품을 관리하는 큐레이터", img: "assets/case2-curator.png", home: "night-gallery", token: "흰 장갑의 유리 가루" },
+      { id: "cafeowner", name: "민재 카페주인", job: "박물관 카페를 닫는 주인", img: "assets/case2-cafe-owner.png", home: "museum-cafe", token: "구겨진 영수증" },
+      { id: "violinist", name: "라라 바이올리니스트", job: "광장에서 밤 연주를 하는 연주자", img: "assets/case2-violinist.png", home: "museum-plaza", token: "찢어진 악보 조각" },
+      { id: "janitor", name: "도윤 관리인", job: "직원 복도를 청소하는 관리인", img: "assets/case2-janitor.png", home: "service-hall", token: "젖은 열쇠 고리 자국" },
+    ],
+    intro: "달빛 박물관 폐관 후, 관장이 전시실에서 쓰러진 채 발견됐어요. 피가 보이거나 무서운 장면은 없지만, 누군가 진열장을 만지고 시간을 속였어요.",
+    success: "침착한 추리였어요! 관장은 안전하게 회복했고, 범인은 경찰에게 조용히 인계됐어요. 이제 더 어려운 실종사건이 열립니다.",
     item(suspect, culprit) {
       if (suspect.id === culprit.id) {
-        return `무대 주변의 작은 흔적이 ${suspect.name}의 물건과 이어져요. 알리바이 시간까지 함께 보면 아주 수상해요.`;
+        return `${suspect.token}이 사건 시간의 빈틈과 이어져요. 알리바이까지 함께 보면 ${suspect.name}이 가장 수상해요.`;
       }
-      return `${suspect.name}의 물건처럼 보였지만 새 장식과 섞인 흔적이에요. 이 사람은 범인 후보에서 멀어져요.`;
+      return `${suspect.token}은 현장 흔적과 비슷하지만 결정적인 시간과 맞지 않아요. ${suspect.name}은 후보에서 멀어져요.`;
     },
     alibi(suspect, culprit) {
       if (suspect.id === culprit.id) {
-        return `"4시 10분에는 혼자 있었어." 인형이 쓰러진 바로 그 시간 알리바이가 비어 있어요.`;
+        return `"9시 20분에는 혼자 있었어." 바로 그때 전시실 불이 꺼졌고, 확인해 줄 사람이 없어요.`;
       }
       const alibis = {
-        bakery: "4시 10분에 쿠키 포장 줄을 도와주고 있었어.",
-        library: "4시 10분에 독서 모임 아이들에게 책갈피를 나눠줬어.",
-        park: "4시 10분에 연못 옆 꽃밭에 물을 주고 있었어.",
-        toyshop: "4시 10분에 계산대에서 손님을 맞았어.",
-        clocktower: "4시 10분에 시계탑 아래에서 종소리 기록을 적고 있었어.",
+        "night-gallery": "9시 20분에 전시품 점검표를 다른 직원과 확인했어.",
+        "security-room": "9시 20분에 무전 기록을 남기고 있었어.",
+        "museum-cafe": "9시 20분에 마지막 손님의 결제를 처리했어.",
+        "museum-plaza": "9시 20분에 광장 가로등 아래서 연주 중이었어.",
+        "service-hall": "9시 20분에 복도 청소 체크를 마쳤어.",
       };
       return `"${alibis[suspect.home]}" 시간 단서와 잘 맞는 알리바이예요.`;
+    },
+  },
+  {
+    id: "missing-camp",
+    label: "세 번째 사건",
+    level: "어려움",
+    name: "바닷가 과학캠프 실종사건",
+    title: "과학캠프에서 친구가 사라졌어요",
+    image: "assets/case3-intro.png",
+    mapImg: "assets/case3-intro.png",
+    introImg: "assets/case3-intro.png",
+    successImg: "assets/case3-success.png",
+    failImg: "assets/case3-fail.png",
+    locations: [
+      {
+        id: "marine-lab",
+        name: "해양 연구실",
+        icon: "◆",
+        x: 22,
+        y: 44,
+        focus: "44% 54%",
+        clueSpot: [42, 66],
+        actorSpot: [68, 50],
+        intro: "젖은 연구 노트에 지워진 시간 표시가 남아 있어요.",
+        quiz: { question: "바다 생물을 기록할 때 가장 어울리는 물건은?", options: ["연구 노트", "영수증", "악보"], answer: "연구 노트" },
+      },
+      {
+        id: "kayak-pier",
+        name: "카약 선착장",
+        icon: "●",
+        x: 42,
+        y: 70,
+        focus: "58% 66%",
+        clueSpot: [46, 72],
+        actorSpot: [66, 52],
+        intro: "카약 밧줄이 다시 묶인 방향이 이상해요.",
+        quiz: { question: "선착장에서 배가 움직였는지 알 수 있는 것은?", options: ["밧줄 매듭", "우산 손잡이", "쿠키 봉투"], answer: "밧줄 매듭" },
+      },
+      {
+        id: "weather-station",
+        name: "등대 기상대",
+        icon: "▲",
+        x: 64,
+        y: 29,
+        focus: "54% 34%",
+        clueSpot: [48, 58],
+        actorSpot: [68, 48],
+        intro: "무전기 옆에 바람 방향 기록이 한 줄 비어 있어요.",
+        quiz: { question: "기상대에서 길을 찾는 데 도움이 되는 정보는?", options: ["바람 방향", "커피 쿠폰", "장갑 가루"], answer: "바람 방향" },
+      },
+      {
+        id: "photo-kiosk",
+        name: "사진 매점",
+        icon: "★",
+        x: 76,
+        y: 56,
+        focus: "66% 52%",
+        clueSpot: [43, 64],
+        actorSpot: [67, 50],
+        intro: "사진 인화기에는 한 장 빠진 시간대의 사진 번호가 남아 있어요.",
+        quiz: { question: "누가 어디에 있었는지 보여 줄 수 있는 것은?", options: ["사진 번호", "대걸레 자국", "비늘 표본"], answer: "사진 번호" },
+      },
+      {
+        id: "camp-kitchen",
+        name: "캠프 식당",
+        icon: "■",
+        x: 87,
+        y: 78,
+        focus: "62% 62%",
+        clueSpot: [50, 68],
+        actorSpot: [68, 51],
+        intro: "간식 바구니 옆에 찢어진 쪽지가 놓여 있어요.",
+        quiz: { question: "식당에서 누군가를 불러낸 단서로 가장 알맞은 것은?", options: ["찢어진 쪽지", "유리 조각", "시계 톱니"], answer: "찢어진 쪽지" },
+      },
+    ],
+    suspects: [
+      { id: "biologist", name: "하린 연구원", job: "해양 생물을 기록하는 연구원", img: "assets/case3-biologist.png", home: "marine-lab", token: "지워진 연구 노트" },
+      { id: "coach", name: "준호 카약코치", job: "선착장 안전을 맡은 코치", img: "assets/case3-kayak-coach.png", home: "kayak-pier", token: "다시 묶인 밧줄" },
+      { id: "weather", name: "미라 기상관찰원", job: "등대에서 날씨를 기록하는 관찰원", img: "assets/case3-weather-watcher.png", home: "weather-station", token: "빈 바람 기록" },
+      { id: "photographer", name: "태오 사진사", job: "캠프 사진을 찍는 사진사", img: "assets/case3-photographer.png", home: "photo-kiosk", token: "빠진 사진 번호" },
+      { id: "cook", name: "소담 캠프요리사", job: "간식과 식사를 준비하는 요리사", img: "assets/case3-cook.png", home: "camp-kitchen", token: "찢어진 간식 쪽지" },
+    ],
+    intro: "바닷가 과학캠프에서 한 친구가 저녁 점호 전에 사라졌어요. 위험한 장면은 없지만, 누군가 친구를 다른 곳으로 데려가 숨긴 듯해요. 단서가 서로 연결되어야 진짜 범인이 보여요.",
+    success: "대단해요! 사라진 친구는 무사히 발견됐고, 범인은 경찰에게 인계됐어요. 어려운 실종사건까지 해결했습니다.",
+    item(suspect, culprit) {
+      if (suspect.id === culprit.id) {
+        return `${suspect.token}은 다른 장소의 시간 단서와 이어져요. 여러 힌트를 모아 보면 ${suspect.name}의 동선이 가장 이상해요.`;
+      }
+      return `${suspect.token}은 수상하지만 다른 사람의 기록과 맞물려 알리바이를 도와줘요. 아직 진짜 연결고리를 찾아야 해요.`;
+    },
+    alibi(suspect, culprit) {
+      if (suspect.id === culprit.id) {
+        return `"해 질 무렵엔 혼자 정리하고 있었어." 그런데 그 시간의 사진과 바람 기록이 비어 있어요.`;
+      }
+      const alibis = {
+        "marine-lab": "해 질 무렵 연구실에서 표본 수를 두 명이 함께 세고 있었어.",
+        "kayak-pier": "해 질 무렵 선착장에서 구명조끼를 학생들과 확인했어.",
+        "weather-station": "해 질 무렵 등대에서 무전 보고를 했어.",
+        "photo-kiosk": "해 질 무렵 단체 사진을 인화하고 있었어.",
+        "camp-kitchen": "해 질 무렵 식당에서 간식 바구니를 나눠 주고 있었어.",
+      };
+      return `"${alibis[suspect.home]}" 다른 단서와 함께 보면 꽤 탄탄한 알리바이예요.`;
     },
   },
 ];
@@ -124,11 +307,13 @@ const cases = [
 let game = {};
 
 const caseCard = document.querySelector("#caseCard");
+const caseImage = document.querySelector("#caseImage");
 const caseName = document.querySelector("#caseName");
 const caseProgress = document.querySelector("#caseProgress");
 const sceneTitle = document.querySelector("#sceneTitle");
 const sceneText = document.querySelector("#sceneText");
 const sceneActions = document.querySelector("#sceneActions");
+const mapImage = document.querySelector("#mapImage");
 const mapPins = document.querySelector("#mapPins");
 const suspectsEl = document.querySelector("#suspects");
 const deductionScreen = document.querySelector("#deductionScreen");
@@ -155,6 +340,7 @@ const evidenceType = document.querySelector("#evidenceType");
 const evidenceTitle = document.querySelector("#evidenceTitle");
 const evidenceText = document.querySelector("#evidenceText");
 let suppressHotspotUntil = 0;
+let pendingRestartCaseIndex = null;
 
 document.querySelector("#newGameButton").addEventListener("click", () => startCase(0));
 document.querySelector("#closePlaceButton").addEventListener("click", closePlace);
@@ -185,7 +371,7 @@ if ("serviceWorker" in navigator) {
 
 function startCase(caseIndex) {
   const selectedCase = cases[caseIndex];
-  const culprit = suspects[Math.floor(Math.random() * suspects.length)];
+  const culprit = selectedCase.suspects[Math.floor(Math.random() * selectedCase.suspects.length)];
   game = {
     caseIndex,
     case: selectedCase,
@@ -202,19 +388,27 @@ function startCase(caseIndex) {
   closePlace();
   closeQuiz();
   render();
-  showEvidence("사건 발생", selectedCase.name, selectedCase.intro, "!");
+  showEvidence("사건 발생", selectedCase.name, selectedCase.intro, "!", selectedCase.introImg);
+}
+
+function currentLocations() {
+  return game.case.locations;
+}
+
+function currentSuspects() {
+  return game.case.suspects;
 }
 
 function locationName(locationId) {
-  return locations.find((location) => location.id === locationId).name;
+  return currentLocations().find((location) => location.id === locationId).name;
 }
 
 function currentLocation() {
-  return locations[game.routeIndex];
+  return currentLocations()[game.routeIndex];
 }
 
 function suspectAt(locationId) {
-  return suspects.find((suspect) => suspect.home === locationId);
+  return currentSuspects().find((suspect) => suspect.home === locationId);
 }
 
 function currentSuspect() {
@@ -222,7 +416,7 @@ function currentSuspect() {
 }
 
 function currentCulprit() {
-  return suspects.find((suspect) => suspect.id === game.culpritId);
+  return currentSuspects().find((suspect) => suspect.id === game.culpritId);
 }
 
 function canJudgeCurrent() {
@@ -239,6 +433,8 @@ function render() {
 }
 
 function renderCaseHeader() {
+  caseImage.src = game.case.image;
+  caseImage.alt = game.case.name;
   caseName.textContent = game.case.title;
   caseCard.classList.toggle("done", game.solved);
 }
@@ -246,7 +442,7 @@ function renderCaseHeader() {
 function renderScene() {
   const location = currentLocation();
   const suspect = currentSuspect();
-  caseProgress.textContent = `${game.case.label} · ${game.case.level} · ${game.routeIndex + 1}/${locations.length}`;
+  caseProgress.textContent = `${game.case.label} · ${game.case.level} · ${game.routeIndex + 1}/${currentLocations().length}`;
   sceneTitle.textContent = `${location.name}에서 ${suspect.name} 만나기`;
   sceneText.textContent = game.solved
     ? "사건이 해결됐어요. 다음 사건으로 넘어가거나 처음부터 다시 도전할 수 있어요."
@@ -272,6 +468,9 @@ function renderScene() {
     addAction("두 번째 사건 시작", () => startCase(1), false, true);
   }
   if (game.solved && game.caseIndex === 1) {
+    addAction("세 번째 사건 시작", () => startCase(2), false, true);
+  }
+  if (game.solved && game.caseIndex === 2) {
     addAction("처음부터 다시", () => startCase(0), false, true);
   }
 }
@@ -287,8 +486,10 @@ function addAction(label, handler, disabled = false, primary = false) {
 }
 
 function renderMap() {
+  mapImage.src = game.case.mapImg;
+  mapImage.alt = `${game.case.name} 지도`;
   mapPins.innerHTML = "";
-  locations.forEach((location, index) => {
+  currentLocations().forEach((location, index) => {
     const button = document.createElement("button");
     const locked = index > game.routeIndex || game.solved;
     button.className = `pin ${index === game.routeIndex && !game.solved ? "current" : ""} ${index < game.routeIndex ? "solved" : ""} ${locked ? "locked" : ""}`;
@@ -305,8 +506,8 @@ function renderMap() {
 
 function renderSuspects() {
   suspectsEl.innerHTML = "";
-  suspects.forEach((suspect) => {
-    const locationIndex = locations.findIndex((location) => location.id === suspect.home);
+  currentSuspects().forEach((suspect) => {
+    const locationIndex = currentLocations().findIndex((location) => location.id === suspect.home);
     const active = locationIndex === game.routeIndex && !game.solved;
     const card = document.createElement("button");
     card.className = `suspect-card ${active ? "selected" : ""} ${game.cleared.has(suspect.id) ? "cleared" : ""}`;
@@ -329,11 +530,11 @@ function renderSuspects() {
 
 function renderDeduction() {
   const suspect = currentSuspect();
-  deductionCount.textContent = game.solved ? "해결" : `${game.routeIndex + 1}/${locations.length}`;
+  deductionCount.textContent = game.solved ? "해결" : `${game.routeIndex + 1}/${currentLocations().length}`;
   deductionScreen.innerHTML = `
     <div class="radar-pips">
-      <div class="radar-pip">현재 장소<span>${game.routeIndex + 1}/5</span></div>
-      <div class="radar-pip">아이템<span>${game.items.size}/5</span></div>
+      <div class="radar-pip">현재 장소<span>${game.routeIndex + 1}/${currentLocations().length}</span></div>
+      <div class="radar-pip">아이템<span>${game.items.size}/${currentSuspects().length}</span></div>
       <div class="radar-pip">알리바이<span>${game.heard.has(suspect.id) ? "확인" : "대기"}</span></div>
     </div>
     <div class="radar-card">
@@ -357,14 +558,14 @@ function renderDeduction() {
 
 function renderItemRows() {
   if (!game.items.size) return "아직 힌트 아이템이 없어요. 장소 안의 반짝 지점에서 퀴즈를 풀어 보세요.";
-  return suspects
+  return currentSuspects()
     .filter((suspect) => game.items.has(suspect.id))
     .map((suspect) => `<div class="item-row">${suspect.token}<span>${suspect.name}</span></div>`)
     .join("");
 }
 
 function renderCandidates() {
-  return `<div class="candidate-grid">${suspects
+  return `<div class="candidate-grid">${currentSuspects()
     .map((suspect) => {
       const out = game.eliminated.has(suspect.id);
       const hot = game.primeSuspectId === suspect.id;
@@ -379,6 +580,8 @@ function openPlace(location) {
   placeStep.textContent = `${game.case.name} · ${game.case.level}`;
   placeName.textContent = location.name;
   placeIntro.textContent = `${location.intro} 반짝이는 곳의 퀴즈를 풀어 힌트 아이템을 얻고, ${suspect.name}을 직접 눌러 대화하세요.`;
+  placeSceneImage.src = location.scene || game.case.mapImg;
+  placeSceneImage.alt = location.name;
   placeSceneImage.style.objectPosition = location.focus;
   clueHotspot.style.left = `${location.clueSpot[0]}%`;
   clueHotspot.style.top = `${location.clueSpot[1]}%`;
@@ -440,7 +643,7 @@ function showPlaceBubble(title, text) {
 function showClueDiscovery(title, text) {
   const location = currentLocation();
   positionClueDiscovery(location);
-  clueDiscovery.innerHTML = `<strong>${title}</strong>${text}<span class="dismiss-hint">탭하면 닫혀요</span>`;
+  clueDiscovery.innerHTML = `<strong>${title}</strong>${text}`;
   clueDiscovery.hidden = false;
   clueDiscovery.style.display = "block";
   clueDiscovery.style.pointerEvents = "auto";
@@ -534,7 +737,7 @@ function judge(accuse) {
     }
     game.cleared.add(suspect.id);
     game.routeIndex += 1;
-    if (game.routeIndex >= locations.length) {
+    if (game.routeIndex >= currentLocations().length) {
       solveCase(currentCulprit());
       return;
     }
@@ -546,8 +749,8 @@ function judge(accuse) {
   }
 
   const message = accuse ? `${suspect.name}은 범인이 아니었어요. 사건을 처음부터 다시 시작합니다.` : `${suspect.name}이 범인이었어요. 놓쳤으니 처음부터 다시 도전해요.`;
-  showEvidence("추리 실패", "다시 시작", message, "?");
-  setTimeout(() => startCase(game.caseIndex), 900);
+  pendingRestartCaseIndex = game.caseIndex;
+  showEvidence("추리 실패", "다시 도전", message, "?", game.case.failImg);
 }
 
 function solveCase(suspect) {
@@ -555,12 +758,22 @@ function solveCase(suspect) {
   game.latest = `${suspect.name}이 범인이었어요. ${game.case.success}`;
   closePlace();
   document.querySelector(".game-shell").classList.add("celebrate");
-  showEvidence("사건 해결", suspect.name, game.case.success, "✓");
+  showEvidence("사건 해결", suspect.name, game.case.success, "✓", game.case.successImg);
   setTimeout(() => document.querySelector(".game-shell").classList.remove("celebrate"), 520);
   render();
 }
 
-function showEvidence(type, title, text, icon) {
+function showEvidence(type, title, text, icon, imageSrc = "") {
+  const evidenceCard = document.querySelector(".evidence-card");
+  evidenceCard.querySelector(".evidence-art")?.remove();
+  evidenceCard.classList.toggle("has-image", Boolean(imageSrc));
+  if (imageSrc) {
+    const image = document.createElement("img");
+    image.className = "evidence-art";
+    image.src = imageSrc;
+    image.alt = title;
+    evidenceCard.prepend(image);
+  }
   evidenceType.textContent = type;
   evidenceTitle.textContent = title;
   evidenceText.textContent = text;
@@ -570,6 +783,11 @@ function showEvidence(type, title, text, icon) {
 
 function closeEvidence() {
   evidencePopup.hidden = true;
+  if (pendingRestartCaseIndex !== null) {
+    const nextCaseIndex = pendingRestartCaseIndex;
+    pendingRestartCaseIndex = null;
+    startCase(nextCaseIndex);
+  }
 }
 
 function showToast(message) {
