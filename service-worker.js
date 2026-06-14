@@ -1,4 +1,4 @@
-const CACHE_NAME = "detective-quest-game-v7";
+const CACHE_NAME = "detective-quest-game-v8";
 const APP_ASSETS = [
   "./",
   "./index.html",

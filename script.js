@@ -161,6 +161,9 @@ document.querySelector("#quizCloseButton").addEventListener("click", closeQuiz);
 document.querySelector("#evidenceCloseButton").addEventListener("click", closeEvidence);
 clueHotspot.addEventListener("click", inspectCurrent);
 suspectActor.addEventListener("click", hearCurrent);
+clueDiscovery.addEventListener("click", () => {
+  clueDiscovery.hidden = true;
+});
 placeBubble.addEventListener("click", () => {
   placeBubble.hidden = true;
 });
@@ -407,6 +410,10 @@ function closePlace() {
 
 function inspectCurrent() {
   const suspect = currentSuspect();
+  if (!clueDiscovery.hidden) {
+    clueDiscovery.hidden = true;
+    return;
+  }
   if (game.items.has(suspect.id)) {
     showHintItem(suspect);
     return;
