@@ -18,11 +18,11 @@
           <p class="eyebrow">5단계 지도 퀘스트</p>
           <h1>반짝별 탐정단</h1>
         </div>
-        <div class="case-card">
+        <div class="case-card" id="caseCard">
           <img src="assets/star-badge.png" alt="사라진 별 배지" />
           <div>
             <span>오늘의 사건</span>
-            <strong>시계탑의 별 배지가 사라졌어요!</strong>
+            <strong id="caseName">시계탑의 별 배지가 사라졌어요!</strong>
           </div>
         </div>
         <button class="icon-button" id="newGameButton" type="button" aria-label="새 게임">↻</button>
@@ -53,6 +53,30 @@
         </section>
       </section>
     </main>
+
+    <section class="place-view" id="placeView" aria-label="세부 장소" hidden>
+      <div class="place-dialog">
+        <div class="place-hero">
+          <img src="assets/quest-map.png" alt="" />
+          <button class="close-button" id="closePlaceButton" type="button" aria-label="지도 화면으로 돌아가기">×</button>
+        </div>
+        <div class="place-content">
+          <p class="eyebrow" id="placeStep">세부 장소</p>
+          <h2 id="placeName"></h2>
+          <p id="placeIntro"></p>
+          <div class="detail-grid">
+            <section>
+              <h3>반짝 단서 찾기</h3>
+              <div class="detail-actions" id="placeClues"></div>
+            </section>
+            <section>
+              <h3>알리바이 듣기</h3>
+              <div class="detail-actions" id="placeAlibis"></div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <script src="script.js"></script>
