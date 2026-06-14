@@ -15,7 +15,7 @@
     <main class="game-shell">
       <section class="topbar" aria-label="게임 정보">
         <div>
-          <p class="eyebrow">5단계 지도 퀘스트</p>
+          <p class="eyebrow">장소별 추리 게임</p>
           <h1>반짝별 탐정단</h1>
         </div>
         <div class="case-card" id="caseCard">
@@ -29,11 +29,11 @@
       </section>
 
       <section class="quest-board">
-        <aside class="quest-panel" aria-label="퀘스트 단계">
-          <div class="stage-meter" id="stageMeter"></div>
-          <h2 id="stageTitle"></h2>
-          <p id="stageText"></p>
-          <div class="stage-actions" id="stageActions"></div>
+        <aside class="quest-panel" aria-label="현재 추리">
+          <p class="eyebrow" id="caseProgress">첫 번째 사건</p>
+          <h2 id="sceneTitle"></h2>
+          <p id="sceneText"></p>
+          <div class="scene-actions" id="sceneActions"></div>
         </aside>
 
         <section class="map-panel" aria-label="탐정 지도">
@@ -66,11 +66,11 @@
           <p id="placeIntro"></p>
           <div class="detail-grid">
             <section>
-              <h3>반짝 단서 찾기</h3>
+              <h3>현장 단서</h3>
               <div class="detail-actions" id="placeClues"></div>
             </section>
             <section>
-              <h3>알리바이 듣기</h3>
+              <h3>용의자 대화</h3>
               <div class="detail-actions" id="placeAlibis"></div>
             </section>
           </div>
