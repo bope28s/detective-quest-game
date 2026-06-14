@@ -199,6 +199,29 @@ h1 {
   font-weight: 900;
 }
 
+.case-select-tools {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.reset-progress-button {
+  min-height: 38px;
+  padding: 0 12px;
+  border: 1px solid rgba(36, 48, 68, 0.18);
+  border-radius: 999px;
+  background: #243044;
+  color: white;
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.reset-progress-button:hover {
+  background: #3b4c68;
+}
+
 .case-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(170px, 1fr));
@@ -275,12 +298,37 @@ h1 {
 }
 
 .case-choice.cleared {
-  border-color: rgba(95, 193, 120, 0.95);
+  border-color: rgba(36, 48, 68, 0.18);
+  background: #eceff4;
+  cursor: not-allowed;
+  filter: grayscale(0.88);
 }
 
 .case-choice.cleared .case-status {
-  color: #174526;
-  background: #dff9e8;
+  color: #243044;
+  background: #ffffff;
+}
+
+.case-choice.cleared img,
+.case-choice.cleared strong,
+.case-choice.cleared small {
+  opacity: 0.46;
+}
+
+.cleared-stamp {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 36%;
+  padding: 10px 18px;
+  border: 4px solid rgba(36, 48, 68, 0.82);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.88);
+  color: #243044;
+  box-shadow: 0 14px 34px rgba(36, 48, 68, 0.24);
+  font-size: 1.45rem;
+  font-weight: 900;
+  transform: translate(-50%, -50%) rotate(-8deg);
 }
 
 .final-choice {
@@ -1205,6 +1253,16 @@ h1 {
   .case-select-heading {
     display: grid;
     align-items: start;
+  }
+
+  .case-select-tools {
+    justify-content: stretch;
+  }
+
+  .case-select-tools span,
+  .reset-progress-button {
+    width: 100%;
+    text-align: center;
   }
 
   .case-grid {

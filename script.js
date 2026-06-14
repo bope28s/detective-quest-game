@@ -409,6 +409,12 @@ const cases = [
 const PROGRESS_KEY = "detectiveQuestProgressV1";
 const FINALE_KEY = "detectiveQuestFinaleV1";
 const CASE_DISPLAY_ORDER = ["star", "zoo-puppy", "museum-night", "missing-camp"];
+const CASE_DIFFICULTY_STARS = {
+  star: 1,
+  "zoo-puppy": 2,
+  "museum-night": 3,
+  "missing-camp": 5,
+};
 
 const savedProgress = loadProgress();
 let game = { mode: "select" };
@@ -603,6 +609,16 @@ function saveProgress() {
   }
 }
 
+function resetProgress() {
+  completedCases = new Set();
+  solvedCulprits = {};
+  finalSolved = false;
+  localStorage.removeItem(PROGRESS_KEY);
+  localStorage.removeItem(FINALE_KEY);
+  showToast("처음부터 다시 시작할 준비가 됐어요.");
+  showCaseSelect();
+}
+
 function showCaseSelect() {
   game = { mode: "select" };
   closePlace();
@@ -626,7 +642,10 @@ function renderCaseSelect() {
         <p class="eyebrow">사건 파일</p>
         <h2>해결할 사건을 고르세요</h2>
       </div>
-      <span>${completedCount}/${cases.length} 클리어</span>
+      <div class="case-select-tools">
+        <span>${completedCount}/${cases.length} 클리어</span>
+        <button class="reset-progress-button" type="button" data-reset-progress>처음부터 시작</button>
+      </div>
     </div>
     <div class="case-grid">
       ${orderedCases.map((caseFile) => renderCaseChoice(caseFile, cases.indexOf(caseFile))).join("")}
@@ -637,19 +656,27 @@ function renderCaseSelect() {
   caseSelect.querySelectorAll("[data-case-index]").forEach((button) => {
     button.addEventListener("click", () => startCase(Number(button.dataset.caseIndex)));
   });
+  caseSelect.querySelector("[data-reset-progress]")?.addEventListener("click", resetProgress);
   caseSelect.querySelector("[data-final-game]")?.addEventListener("click", startFinalGame);
 }
 
 function renderCaseChoice(caseFile, index) {
   const cleared = completedCases.has(caseFile.id);
+  const stars = renderDifficultyStars(caseFile);
   return `
-    <button class="case-choice ${cleared ? "cleared" : ""}" type="button" data-case-index="${index}">
+    <button class="case-choice ${cleared ? "cleared" : ""}" type="button" data-case-index="${index}" ${cleared ? "disabled" : ""}>
       <img src="${caseFile.image}" alt="${caseFile.name}" />
-      <span class="case-status">${cleared ? "클리어" : caseFile.level}</span>
+      <span class="case-status">${cleared ? "클리어" : stars}</span>
+      ${cleared ? '<span class="cleared-stamp">클리어</span>' : ""}
       <strong>${caseFile.name}</strong>
       <small>${caseFile.title}</small>
     </button>
   `;
+}
+
+function renderDifficultyStars(caseFile) {
+  const count = CASE_DIFFICULTY_STARS[caseFile.id] || 1;
+  return `${"★".repeat(count)}${"☆".repeat(5 - count)}`;
 }
 
 function renderFinalChoice(finalReady) {
