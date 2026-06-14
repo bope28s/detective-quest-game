@@ -87,6 +87,7 @@ const placeStep = document.querySelector("#placeStep");
 const clueHotspot = document.querySelector("#clueHotspot");
 const suspectActor = document.querySelector("#suspectActor");
 const placeSuspectImage = document.querySelector("#placeSuspectImage");
+const clueDiscovery = document.querySelector("#clueDiscovery");
 const placeBubble = document.querySelector("#placeBubble");
 const sceneTip = document.querySelector("#sceneTip");
 const evidencePopup = document.querySelector("#evidencePopup");
@@ -100,6 +101,9 @@ document.querySelector("#closePlaceButton").addEventListener("click", closePlace
 document.querySelector("#evidenceCloseButton").addEventListener("click", closeEvidence);
 clueHotspot.addEventListener("click", inspectCurrent);
 suspectActor.addEventListener("click", hearCurrent);
+placeBubble.addEventListener("click", () => {
+  placeBubble.hidden = true;
+});
 placeView.addEventListener("click", (event) => {
   if (event.target === placeView) closePlace();
 });
@@ -297,6 +301,9 @@ function openPlace(location) {
   if (placeBubble.hidden) {
     placeBubble.innerHTML = `<strong>${location.name}에 들어왔어요</strong>주변을 살펴보고 ${suspect.name}에게 말을 걸어 보세요.`;
   }
+  if (clueDiscovery.hidden) {
+    positionClueDiscovery(location);
+  }
 
   placeView.hidden = false;
   render();
@@ -305,6 +312,7 @@ function openPlace(location) {
 function closePlace() {
   placeView.hidden = true;
   placeBubble.hidden = true;
+  clueDiscovery.hidden = true;
 }
 
 function inspectCurrent() {
@@ -312,8 +320,8 @@ function inspectCurrent() {
   const clue = game.case.clue(suspect, currentCulprit());
   game.inspected.add(suspect.id);
   game.latest = clue;
-  showPlaceBubble(suspect.id === game.culpritId ? "중요한 흔적!" : "현장 조사", clue);
   openPlace(currentLocation());
+  showClueDiscovery(suspect.id === game.culpritId ? "중요한 흔적 발견" : "현장 단서 발견", clue);
 }
 
 function hearCurrent() {
@@ -321,13 +329,25 @@ function hearCurrent() {
   const alibi = game.case.alibi(suspect, currentCulprit());
   game.heard.add(suspect.id);
   game.latest = alibi;
-  showPlaceBubble(`${suspect.name}의 말`, alibi);
   openPlace(currentLocation());
+  showPlaceBubble(`${suspect.name}의 말`, alibi);
 }
 
 function showPlaceBubble(title, text) {
   placeBubble.innerHTML = `<strong>${title}</strong>${text}`;
   placeBubble.hidden = false;
+}
+
+function showClueDiscovery(title, text) {
+  const location = currentLocation();
+  positionClueDiscovery(location);
+  clueDiscovery.innerHTML = `<strong>${title}</strong>${text}`;
+  clueDiscovery.hidden = false;
+}
+
+function positionClueDiscovery(location) {
+  clueDiscovery.style.left = `${location.clueSpot[0]}%`;
+  clueDiscovery.style.top = `${location.clueSpot[1]}%`;
 }
 
 function judge(accuse) {

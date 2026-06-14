@@ -626,7 +626,11 @@ h1 {
   width: min(560px, calc(100% - 28px));
   padding: 13px 15px;
   border-radius: 8px;
+  border: 0;
   background: rgba(255, 253, 245, 0.96);
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
   box-shadow: 0 16px 42px rgba(36, 48, 68, 0.24);
   line-height: 1.45;
   transform: translateX(-50%);
@@ -634,6 +638,39 @@ h1 {
 }
 
 .place-bubble strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.clue-discovery {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+  max-width: min(360px, calc(100% - 34px));
+  padding: 11px 13px;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 212, 90, 0.95);
+  background: rgba(255, 253, 245, 0.96);
+  box-shadow: 0 16px 42px rgba(36, 48, 68, 0.24);
+  line-height: 1.42;
+  transform: translate(-50%, -112%);
+  animation: discoveryIn 220ms ease-out;
+}
+
+.clue-discovery::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  width: 18px;
+  height: 18px;
+  background: rgba(255, 253, 245, 0.96);
+  border-right: 2px solid rgba(255, 212, 90, 0.95);
+  border-bottom: 2px solid rgba(255, 212, 90, 0.95);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.clue-discovery strong {
   display: block;
   margin-bottom: 4px;
 }
@@ -776,6 +813,13 @@ h1 {
   }
 }
 
+@keyframes discoveryIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -92%) scale(0.96);
+  }
+}
+
 @media (max-width: 940px) {
   .topbar,
   .quest-board,
@@ -855,6 +899,10 @@ h1 {
     margin: 14px;
     width: 22px;
     height: 22px;
+  }
+
+  .clue-discovery {
+    max-width: calc(100% - 24px);
   }
 
   .suspect-spotlight {
