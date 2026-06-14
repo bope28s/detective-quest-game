@@ -2,13 +2,17 @@
   "name": "반짝별 탐정단",
   "short_name": "별탐정",
   "description": "그림 단서를 모아 범인을 찾는 어린이용 탐정 퀘스트 게임",
+  "id": "./",
   "lang": "ko-KR",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
   "orientation": "any",
   "background_color": "#f7fbff",
   "theme_color": "#75bdf2",
+  "categories": ["games", "education", "kids"],
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "assets/icon-192.png",

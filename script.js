@@ -339,10 +339,13 @@ const evidenceIcon = document.querySelector("#evidenceIcon");
 const evidenceType = document.querySelector("#evidenceType");
 const evidenceTitle = document.querySelector("#evidenceTitle");
 const evidenceText = document.querySelector("#evidenceText");
+const installButton = document.querySelector("#installButton");
 let suppressHotspotUntil = 0;
 let pendingRestartCaseIndex = null;
+let deferredInstallPrompt = null;
 
 document.querySelector("#newGameButton").addEventListener("click", () => startCase(0));
+installButton.addEventListener("click", handleInstallClick);
 document.querySelector("#closePlaceButton").addEventListener("click", closePlace);
 document.querySelector("#quizCloseButton").addEventListener("click", closeQuiz);
 document.querySelector("#evidenceCloseButton").addEventListener("click", closeEvidence);
@@ -367,6 +370,69 @@ if ("serviceWorker" in navigator) {
       // The game still works online when service workers are unavailable.
     });
   });
+}
+
+window.addEventListener("beforeinstallprompt", (event) => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+  showInstallButton();
+});
+
+window.addEventListener("appinstalled", () => {
+  deferredInstallPrompt = null;
+  hideInstallButton();
+  showToast("앱 설치가 완료됐어요.");
+});
+
+setupInstallUi();
+
+function setupInstallUi() {
+  if (isStandaloneApp()) {
+    hideInstallButton();
+    return;
+  }
+
+  if (isIosSafari()) {
+    showInstallButton();
+  }
+}
+
+function showInstallButton() {
+  installButton.hidden = false;
+}
+
+function hideInstallButton() {
+  installButton.hidden = true;
+}
+
+function isStandaloneApp() {
+  return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+}
+
+function isIosSafari() {
+  const ua = window.navigator.userAgent;
+  const isIos = /iphone|ipad|ipod/i.test(ua) || (ua.includes("Macintosh") && navigator.maxTouchPoints > 1);
+  const isSafari = /^((?!CriOS|FxiOS|EdgiOS|OPiOS).)*Safari/i.test(ua);
+  return isIos && isSafari;
+}
+
+async function handleInstallClick() {
+  if (deferredInstallPrompt) {
+    deferredInstallPrompt.prompt();
+    const choice = await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt = null;
+    if (choice.outcome === "accepted") {
+      hideInstallButton();
+    }
+    return;
+  }
+
+  if (isIosSafari()) {
+    showToast("Safari 공유 버튼을 누른 뒤 '홈 화면에 추가'를 선택하세요.");
+    return;
+  }
+
+  showToast("브라우저 메뉴에서 '앱 설치' 또는 '홈 화면에 추가'를 선택하세요.");
 }
 
 function startCase(caseIndex) {
