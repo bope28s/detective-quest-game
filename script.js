@@ -81,6 +81,14 @@ const toast = document.querySelector("#toast");
 
 document.querySelector("#newGameButton").addEventListener("click", startGame);
 
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("service-worker.js").catch(() => {
+      // The game still works online when service workers are unavailable.
+    });
+  });
+}
+
 function startGame() {
   const culprit = suspectTemplates[Math.floor(Math.random() * suspectTemplates.length)];
   game = {
