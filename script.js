@@ -100,8 +100,8 @@ const stageMeter = document.querySelector("#stageMeter");
 const stageActions = document.querySelector("#stageActions");
 const mapPins = document.querySelector("#mapPins");
 const suspectsEl = document.querySelector("#suspects");
-const clueList = document.querySelector("#clueList");
-const notebookCount = document.querySelector("#notebookCount");
+const deductionScreen = document.querySelector("#deductionScreen");
+const deductionCount = document.querySelector("#deductionCount");
 const toast = document.querySelector("#toast");
 const placeView = document.querySelector("#placeView");
 const placeName = document.querySelector("#placeName");
@@ -109,11 +109,20 @@ const placeIntro = document.querySelector("#placeIntro");
 const placeStep = document.querySelector("#placeStep");
 const placeClues = document.querySelector("#placeClues");
 const placeAlibis = document.querySelector("#placeAlibis");
+const evidencePopup = document.querySelector("#evidencePopup");
+const evidenceIcon = document.querySelector("#evidenceIcon");
+const evidenceType = document.querySelector("#evidenceType");
+const evidenceTitle = document.querySelector("#evidenceTitle");
+const evidenceText = document.querySelector("#evidenceText");
 
 document.querySelector("#newGameButton").addEventListener("click", () => startCase(0));
 document.querySelector("#closePlaceButton").addEventListener("click", closePlace);
+document.querySelector("#evidenceCloseButton").addEventListener("click", closeEvidence);
 placeView.addEventListener("click", (event) => {
   if (event.target === placeView) closePlace();
+});
+evidencePopup.addEventListener("click", (event) => {
+  if (event.target === evidencePopup) closeEvidence();
 });
 
 if ("serviceWorker" in navigator) {
@@ -141,7 +150,7 @@ function startCase(caseIndex) {
   };
   addClue(`${selectedCase.name}: ${selectedCase.intro}`, "");
   render();
-  showToast(`${selectedCase.level} 사건이 시작됐어요.`);
+  showEvidence("사건 발생", selectedCase.name, selectedCase.intro, "!");
 }
 
 function locationName(locationId) {
@@ -178,7 +187,7 @@ function render() {
   renderStage();
   renderMap();
   renderSuspects();
-  renderNotebook();
+  renderDeduction();
 }
 
 function renderCaseHeader() {
@@ -192,7 +201,7 @@ function renderStage() {
   stageText.textContent =
     index < 4
       ? "지도 장소를 눌러 안으로 들어가고, 반짝 단서와 알리바이를 직접 모아 보세요."
-      : "수첩의 중요한 단서를 보고 범인을 지목하세요.";
+      : "방금까지 나온 단서와 알리바이를 머릿속에서 연결해 범인을 지목하세요.";
   stageMeter.innerHTML = game.case.stageTitles
     .map((_, dotIndex) => `<span class="stage-dot ${dotIndex < index ? "done" : ""} ${dotIndex === index ? "active" : ""}"></span>`)
     .join("");
@@ -210,9 +219,10 @@ function renderStage() {
   addAction(
     "추리 힌트 보기",
     () => {
-      addClue(game.case.hint(currentCulprit()), "important");
-      renderNotebook();
-      showToast("힌트를 수첩에 적었어요.");
+      const hint = game.case.hint(currentCulprit());
+      addClue(hint, "important");
+      renderDeduction();
+      showEvidence("추리 힌트", "탐정의 생각", hint, "?");
     },
     false,
     false,
@@ -294,19 +304,35 @@ function renderSuspects() {
   });
 }
 
-function renderNotebook() {
-  clueList.innerHTML = "";
-  notebookCount.textContent = `단서 ${game.clues.length}개`;
-  if (!game.clues.length) {
-    clueList.innerHTML = `<div class="clue">아직 수첩이 비어 있어요. 지도 장소를 눌러 안으로 들어가 보세요.</div>`;
-    return;
-  }
-  game.clues.slice().reverse().forEach((clue) => {
-    const item = document.createElement("div");
-    item.className = `clue ${clue.kind || ""}`;
-    item.textContent = clue.text;
-    clueList.appendChild(item);
-  });
+function renderDeduction() {
+  const clueTotal = allCaseClues().length;
+  const importantFound = game.clues.filter((clue) => clue.kind === "important").length;
+  const latest = game.clues[game.clues.length - 1];
+  deductionCount.textContent = `${foundClueCount()}개 발견`;
+  deductionScreen.innerHTML = `
+    <div class="radar-pips">
+      <div class="radar-pip">장소<span>${game.placesOpened.size}/5</span></div>
+      <div class="radar-pip">단서<span>${foundClueCount()}/${clueTotal}</span></div>
+      <div class="radar-pip">대화<span>${game.alibisHeard.size}/5</span></div>
+    </div>
+    <div class="radar-card">
+      <strong>${importantFound ? "중요 단서가 잡혔어요" : "아직 더 둘러봐요"}</strong>
+      ${latest ? latest.text : "지도 장소를 누르면 현장 안으로 들어가 직접 조사할 수 있어요."}
+    </div>
+    <div class="radar-card">
+      <strong>탐정의 다음 행동</strong>
+      ${nextPrompt()}
+    </div>
+  `;
+}
+
+function nextPrompt() {
+  if (game.solved && game.caseIndex === 0) return "첫 사건을 해결했어요. 두 번째 사건 버튼을 눌러 새 사건으로 넘어가요.";
+  if (game.solved) return "두 사건을 모두 해결했어요. 새 게임으로 다시 도전할 수 있어요.";
+  if (!game.placesOpened.size) return "지도에서 가장 궁금한 장소를 눌러 현장으로 들어가요.";
+  if (foundClueCount() < Math.min(3, allCaseClues().length)) return "장소 안의 반짝 단서 버튼을 더 눌러 보세요.";
+  if (game.alibisHeard.size < 3) return "용의자가 있는 장소로 들어가 알리바이를 들어 보세요.";
+  return "이제 범인을 지목할 수 있어요. 중요한 팝업 단서를 떠올려 보세요.";
 }
 
 function openPlace(location) {
@@ -355,7 +381,7 @@ function findClue(location, clue) {
   if (!game.cluesFound.has(clue.id)) {
     game.cluesFound.add(clue.id);
     addClue(`${location.name} · ${clue.label}: ${clue.text}`, clue.important ? "important" : "good");
-    showToast(clue.important ? "중요 단서를 찾았어요!" : "단서를 수첩에 적었어요.");
+    showEvidence(clue.important ? "중요 단서" : "현장 단서", clue.label, clue.text, clue.important ? "!" : "★");
   } else {
     showToast("이미 찾은 단서예요.");
   }
@@ -366,8 +392,9 @@ function hearAlibi(suspect) {
   game.selected = suspect.id;
   if (!game.alibisHeard.has(suspect.id)) {
     game.alibisHeard.add(suspect.id);
-    addClue(`알리바이 · ${game.case.alibi(suspect, currentCulprit())}`, suspect.id === game.culpritId ? "important" : "good");
-    showToast(`${suspect.name}의 알리바이를 들었어요.`);
+    const alibi = game.case.alibi(suspect, currentCulprit());
+    addClue(`알리바이 · ${alibi}`, suspect.id === game.culpritId ? "important" : "good");
+    showEvidence("알리바이 대화", suspect.name, alibi, "“”");
   } else {
     showToast("이미 들은 알리바이예요.");
   }
@@ -387,13 +414,25 @@ function accuse(suspect) {
     game.solved = true;
     document.querySelector(".game-shell").classList.add("celebrate");
     addClue(`해결! ${suspect.name}이 범인이었어요. ${game.case.success}`, "important");
-    showToast("정답이에요! 다음 버튼을 눌러 계속해요.");
+    showEvidence("사건 해결", suspect.name, game.case.success, "✓");
     setTimeout(() => document.querySelector(".game-shell").classList.remove("celebrate"), 520);
   } else {
     addClue(`${suspect.name}은 아닌 것 같아요. 중요한 물건 단서와 시간 단서를 다시 비교해 보세요.`, "");
-    showToast("아까워요. 수첩의 빨간 단서를 다시 봐요.");
+    showEvidence("다시 추리", suspect.name, "아까워요. 중요한 물건 단서와 시간 단서를 다시 비교해 보세요.", "?");
   }
   render();
+}
+
+function showEvidence(type, title, text, icon) {
+  evidenceType.textContent = type;
+  evidenceTitle.textContent = title;
+  evidenceText.textContent = text;
+  evidenceIcon.textContent = icon;
+  evidencePopup.hidden = false;
+}
+
+function closeEvidence() {
+  evidencePopup.hidden = true;
 }
 
 function showToast(message) {

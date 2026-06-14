@@ -138,7 +138,7 @@ h1 {
 }
 
 .quest-panel,
-.notebook {
+.deduction-panel {
   border: 1px solid var(--line);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.88);
@@ -356,12 +356,12 @@ h1 {
   font-weight: 800;
 }
 
-.notebook {
+.deduction-panel {
   min-height: 306px;
   padding: 14px;
 }
 
-.notebook-heading {
+.deduction-heading {
   display: flex;
   justify-content: space-between;
   gap: 10px;
@@ -369,25 +369,23 @@ h1 {
   margin-bottom: 10px;
 }
 
-.notebook h2 {
+.deduction-heading h2 {
   margin-bottom: 0;
   font-size: 1.35rem;
 }
 
-.notebook-heading span {
+.deduction-heading span {
   color: #66738b;
   font-size: 0.86rem;
   font-weight: 900;
 }
 
-.clue-list {
+.deduction-screen {
   display: grid;
-  gap: 9px;
-  max-height: 450px;
-  overflow: auto;
-  padding-right: 4px;
+  gap: 12px;
 }
 
+.radar-card,
 .clue {
   padding: 10px 11px;
   border-left: 7px solid var(--sky);
@@ -404,6 +402,39 @@ h1 {
 .clue.good {
   border-left-color: var(--leaf);
   background: #f2fff6;
+}
+
+.radar-card {
+  border-left-color: var(--berry);
+  background: #fbf7ff;
+}
+
+.radar-card strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.radar-pips {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7px;
+}
+
+.radar-pip {
+  min-height: 52px;
+  padding: 8px;
+  border-radius: 8px;
+  background: #f7f8fb;
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.radar-pip span {
+  display: block;
+  margin-top: 4px;
+  color: var(--coral);
+  font-size: 1.15rem;
 }
 
 .timeline-grid,
@@ -435,6 +466,68 @@ h1 {
   place-items: center;
   padding: 14px;
   background: rgba(36, 48, 68, 0.48);
+}
+
+.evidence-popup {
+  position: fixed;
+  z-index: 30;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(36, 48, 68, 0.34);
+}
+
+.evidence-popup[hidden] {
+  display: none;
+}
+
+.evidence-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 14px;
+  width: min(560px, 100%);
+  padding: 18px;
+  border: 3px solid rgba(255, 212, 90, 0.95);
+  border-radius: 8px;
+  background: #fffdf5;
+  box-shadow: 0 26px 80px rgba(14, 21, 34, 0.32);
+  animation: cluePop 220ms ease-out;
+}
+
+.evidence-card .action-button {
+  grid-column: 1 / -1;
+}
+
+.evidence-icon {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: var(--sun);
+  box-shadow: 0 10px 24px rgba(36, 48, 68, 0.16);
+  font-size: 1.8rem;
+  font-weight: 900;
+}
+
+.evidence-card h2 {
+  margin-bottom: 8px;
+  font-size: 1.5rem;
+}
+
+.evidence-card p:last-child {
+  margin-bottom: 0;
+  color: #4c5871;
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+@keyframes cluePop {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+  }
 }
 
 .place-view[hidden] {
@@ -641,5 +734,14 @@ h1 {
 
   .place-content {
     padding: 14px;
+  }
+
+  .evidence-card {
+    grid-template-columns: 1fr;
+  }
+
+  .evidence-icon {
+    width: 50px;
+    height: 50px;
   }
 }

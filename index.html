@@ -44,12 +44,12 @@
 
       <section class="play-area">
         <section class="suspects" aria-label="용의자 목록" id="suspects"></section>
-        <section class="notebook" aria-label="탐정 수첩">
-          <div class="notebook-heading">
-            <h2>탐정 수첩</h2>
-            <span id="notebookCount">단서 0개</span>
+        <section class="deduction-panel" aria-label="추리 상황">
+          <div class="deduction-heading">
+            <h2>추리 레이더</h2>
+            <span id="deductionCount">조사 시작</span>
           </div>
-          <div class="clue-list" id="clueList"></div>
+          <div class="deduction-screen" id="deductionScreen"></div>
         </section>
       </section>
     </main>
@@ -75,6 +75,18 @@
             </section>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="evidence-popup" id="evidencePopup" aria-label="새 단서" hidden>
+      <div class="evidence-card">
+        <div class="evidence-icon" id="evidenceIcon">!</div>
+        <div>
+          <p class="eyebrow" id="evidenceType">새 단서</p>
+          <h2 id="evidenceTitle"></h2>
+          <p id="evidenceText"></p>
+        </div>
+        <button class="action-button primary" id="evidenceCloseButton" type="button">좋아!</button>
       </div>
     </section>
 
