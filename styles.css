@@ -284,7 +284,15 @@ h1 {
 }
 
 .final-choice {
+  grid-column: 1 / -1;
+  min-height: 220px;
   border-color: rgba(180, 116, 232, 0.45);
+}
+
+.final-choice img {
+  max-height: 220px;
+  object-fit: contain;
+  background: #172033;
 }
 
 .quest-panel,

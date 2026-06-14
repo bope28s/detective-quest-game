@@ -3,6 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
     <meta name="theme-color" content="#75bdf2" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -43,7 +47,7 @@
         </aside>
 
         <section class="map-panel" aria-label="탐정 지도">
-          <img class="map-art" src="assets/quest-map.png" alt="마을 탐정 지도" id="mapImage" />
+          <img class="map-art" src="assets/quest-map.jpg" alt="마을 탐정 지도" id="mapImage" />
           <div class="map-pins" id="mapPins"></div>
         </section>
       </section>
@@ -63,12 +67,12 @@
     <section class="place-view" id="placeView" aria-label="세부 장소" hidden>
       <div class="place-dialog">
         <div class="place-hero" id="placeScene">
-          <img src="assets/quest-map.png" alt="" id="placeSceneImage" />
+          <img src="assets/quest-map.jpg" alt="" id="placeSceneImage" />
           <button class="clue-hotspot" id="clueHotspot" type="button" aria-label="현장 단서 조사하기">
             <span></span>
           </button>
           <button class="suspect-actor" id="suspectActor" type="button" aria-label="용의자와 대화하기">
-            <img id="placeSuspectImage" src="assets/baker.png" alt="" />
+            <img id="placeSuspectImage" src="assets/baker.jpg" alt="" />
           </button>
           <button class="clue-discovery" id="clueDiscovery" type="button" hidden></button>
           <button class="place-bubble" id="placeBubble" type="button" hidden></button>

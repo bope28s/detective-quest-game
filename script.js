@@ -62,11 +62,11 @@ const starLocations = [
 ];
 
 const starSuspects = [
-  { id: "baker", name: "루루 제빵사", job: "쿠키를 굽는 빵집 주인", img: "assets/baker.png", home: "bakery", token: "별 모양 밀가루" },
-  { id: "librarian", name: "모모 사서", job: "책을 정리하는 도서관 사서", img: "assets/librarian.png", home: "library", token: "무지개 책갈피" },
-  { id: "gardener", name: "초록 정원사", job: "공원을 돌보는 정원사", img: "assets/gardener.png", home: "park", token: "초록 물뿌리개 자국" },
-  { id: "toymaker", name: "토토 장난감점장", job: "태엽 장난감을 고치는 점장", img: "assets/toy-maker.png", home: "toyshop", token: "작은 태엽 톱니" },
-  { id: "clockkeeper", name: "째깍 시계관리인", job: "시계탑을 살피는 관리인", img: "assets/clock-keeper.png", home: "clocktower", token: "반짝이는 작은 톱니" },
+  { id: "baker", name: "루루 제빵사", job: "쿠키를 굽는 빵집 주인", img: "assets/baker.jpg", home: "bakery", token: "별 모양 밀가루" },
+  { id: "librarian", name: "모모 사서", job: "책을 정리하는 도서관 사서", img: "assets/librarian.jpg", home: "library", token: "무지개 책갈피" },
+  { id: "gardener", name: "초록 정원사", job: "공원을 돌보는 정원사", img: "assets/gardener.jpg", home: "park", token: "초록 물뿌리개 자국" },
+  { id: "toymaker", name: "토토 장난감점장", job: "태엽 장난감을 고치는 점장", img: "assets/toy-maker.jpg", home: "toyshop", token: "작은 태엽 톱니" },
+  { id: "clockkeeper", name: "째깍 시계관리인", job: "시계탑을 살피는 관리인", img: "assets/clock-keeper.jpg", home: "clocktower", token: "반짝이는 작은 톱니" },
 ];
 
 const cases = [
@@ -76,11 +76,11 @@ const cases = [
     level: "쉬움",
     name: "사라진 별 배지",
     title: "시계탑의 별 배지가 사라졌어요!",
-    image: "assets/case1-intro.png",
-    mapImg: "assets/quest-map.png",
-    introImg: "assets/case1-intro.png",
-    successImg: "assets/case1-success.png",
-    failImg: "assets/case1-fail.png",
+    image: "assets/case1-intro.jpg",
+    mapImg: "assets/quest-map.jpg",
+    introImg: "assets/case1-intro.jpg",
+    successImg: "assets/case1-success.jpg",
+    failImg: "assets/case1-fail.jpg",
     locations: starLocations,
     suspects: starSuspects,
     intro: "시계탑 축제 아침, 반짝이던 별 배지가 사라졌어요. 장소마다 한 사람씩 만나 보세요. 단서가 아주 직접적으로 범인을 알려줄 거예요.",
@@ -104,11 +104,11 @@ const cases = [
     level: "조금 어려움",
     name: "밤의 박물관 사건",
     title: "달빛 박물관에서 관장이 쓰러진 채 발견됐어요",
-    image: "assets/case2-intro.png",
-    mapImg: "assets/case2-intro.png",
-    introImg: "assets/case2-intro.png",
-    successImg: "assets/case2-success.png",
-    failImg: "assets/case2-fail.png",
+    image: "assets/case2-intro.jpg",
+    mapImg: "assets/case2-intro.jpg",
+    introImg: "assets/case2-intro.jpg",
+    successImg: "assets/case2-success.jpg",
+    failImg: "assets/case2-fail.jpg",
     locations: [
       {
         id: "night-gallery",
@@ -172,11 +172,11 @@ const cases = [
       },
     ],
     suspects: [
-      { id: "security", name: "한별 보안요원", job: "야간 보안실을 지키는 요원", img: "assets/case2-security.png", home: "security-room", token: "꺼진 CCTV 시간표" },
-      { id: "curator", name: "서윤 큐레이터", job: "전시품을 관리하는 큐레이터", img: "assets/case2-curator.png", home: "night-gallery", token: "흰 장갑의 유리 가루" },
-      { id: "cafeowner", name: "민재 카페주인", job: "박물관 카페를 닫는 주인", img: "assets/case2-cafe-owner.png", home: "museum-cafe", token: "구겨진 영수증" },
-      { id: "violinist", name: "라라 바이올리니스트", job: "광장에서 밤 연주를 하는 연주자", img: "assets/case2-violinist.png", home: "museum-plaza", token: "찢어진 악보 조각" },
-      { id: "janitor", name: "도윤 관리인", job: "직원 복도를 청소하는 관리인", img: "assets/case2-janitor.png", home: "service-hall", token: "젖은 열쇠 고리 자국" },
+      { id: "security", name: "한별 보안요원", job: "야간 보안실을 지키는 요원", img: "assets/case2-security.jpg", home: "security-room", token: "꺼진 CCTV 시간표" },
+      { id: "curator", name: "서윤 큐레이터", job: "전시품을 관리하는 큐레이터", img: "assets/case2-curator.jpg", home: "night-gallery", token: "흰 장갑의 유리 가루" },
+      { id: "cafeowner", name: "민재 카페주인", job: "박물관 카페를 닫는 주인", img: "assets/case2-cafe-owner.jpg", home: "museum-cafe", token: "구겨진 영수증" },
+      { id: "violinist", name: "라라 바이올리니스트", job: "광장에서 밤 연주를 하는 연주자", img: "assets/case2-violinist.jpg", home: "museum-plaza", token: "찢어진 악보 조각" },
+      { id: "janitor", name: "도윤 관리인", job: "직원 복도를 청소하는 관리인", img: "assets/case2-janitor.jpg", home: "service-hall", token: "젖은 열쇠 고리 자국" },
     ],
     intro: "달빛 박물관 폐관 후, 관장이 전시실에서 쓰러진 채 발견됐어요. 피가 보이거나 무서운 장면은 없지만, 누군가 진열장을 만지고 시간을 속였어요.",
     success: "침착한 추리였어요! 관장은 안전하게 회복했고, 범인은 경찰에게 조용히 인계됐어요. 이제 더 어려운 실종사건이 열립니다.",
@@ -206,11 +206,11 @@ const cases = [
     level: "어려움",
     name: "바닷가 과학캠프 실종사건",
     title: "과학캠프에서 친구가 사라졌어요",
-    image: "assets/case3-intro.png",
-    mapImg: "assets/case3-intro.png",
-    introImg: "assets/case3-intro.png",
-    successImg: "assets/case3-success.png",
-    failImg: "assets/case3-fail.png",
+    image: "assets/case3-intro.jpg",
+    mapImg: "assets/case3-intro.jpg",
+    introImg: "assets/case3-intro.jpg",
+    successImg: "assets/case3-success.jpg",
+    failImg: "assets/case3-fail.jpg",
     locations: [
       {
         id: "marine-lab",
@@ -274,11 +274,11 @@ const cases = [
       },
     ],
     suspects: [
-      { id: "biologist", name: "하린 연구원", job: "해양 생물을 기록하는 연구원", img: "assets/case3-biologist.png", home: "marine-lab", token: "지워진 연구 노트" },
-      { id: "coach", name: "준호 카약코치", job: "선착장 안전을 맡은 코치", img: "assets/case3-kayak-coach.png", home: "kayak-pier", token: "다시 묶인 밧줄" },
-      { id: "weather", name: "미라 기상관찰원", job: "등대에서 날씨를 기록하는 관찰원", img: "assets/case3-weather-watcher.png", home: "weather-station", token: "빈 바람 기록" },
-      { id: "photographer", name: "태오 사진사", job: "캠프 사진을 찍는 사진사", img: "assets/case3-photographer.png", home: "photo-kiosk", token: "빠진 사진 번호" },
-      { id: "cook", name: "소담 캠프요리사", job: "간식과 식사를 준비하는 요리사", img: "assets/case3-cook.png", home: "camp-kitchen", token: "찢어진 간식 쪽지" },
+      { id: "biologist", name: "하린 연구원", job: "해양 생물을 기록하는 연구원", img: "assets/case3-biologist.jpg", home: "marine-lab", token: "지워진 연구 노트" },
+      { id: "coach", name: "준호 카약코치", job: "선착장 안전을 맡은 코치", img: "assets/case3-kayak-coach.jpg", home: "kayak-pier", token: "다시 묶인 밧줄" },
+      { id: "weather", name: "미라 기상관찰원", job: "등대에서 날씨를 기록하는 관찰원", img: "assets/case3-weather-watcher.jpg", home: "weather-station", token: "빈 바람 기록" },
+      { id: "photographer", name: "태오 사진사", job: "캠프 사진을 찍는 사진사", img: "assets/case3-photographer.jpg", home: "photo-kiosk", token: "빠진 사진 번호" },
+      { id: "cook", name: "소담 캠프요리사", job: "간식과 식사를 준비하는 요리사", img: "assets/case3-cook.jpg", home: "camp-kitchen", token: "찢어진 간식 쪽지" },
     ],
     intro: "바닷가 과학캠프에서 한 친구가 저녁 점호 전에 사라졌어요. 위험한 장면은 없지만, 누군가 친구를 다른 곳으로 데려가 숨긴 듯해요. 단서가 서로 연결되어야 진짜 범인이 보여요.",
     success: "대단해요! 사라진 친구는 무사히 발견됐고, 범인은 경찰에게 인계됐어요. 어려운 실종사건까지 해결했습니다.",
@@ -308,11 +308,11 @@ const cases = [
     level: "쉬움+",
     name: "동물원 강아지 실종 사건",
     title: "동물원 안내견 강아지 콩이가 사라졌어요!",
-    image: "assets/case4-intro.png",
-    mapImg: "assets/case4-intro.png",
-    introImg: "assets/case4-intro.png",
-    successImg: "assets/case4-success.png",
-    failImg: "assets/case4-fail.png",
+    image: "assets/case4-intro.jpg",
+    mapImg: "assets/case4-intro.jpg",
+    introImg: "assets/case4-intro.jpg",
+    successImg: "assets/case4-success.jpg",
+    failImg: "assets/case4-fail.jpg",
     locations: [
       {
         id: "zoo-gate",
@@ -376,11 +376,11 @@ const cases = [
       },
     ],
     suspects: [
-      { id: "trainer", name: "도윤 훈련사", job: "안내견 훈련을 맡은 선생님", img: "assets/case4-trainer.svg", home: "zoo-yard", token: "씹힌 공과 새 매듭" },
-      { id: "vet", name: "하린 수의사", job: "동물 병원에서 건강을 살피는 수의사", img: "assets/case4-vet.svg", home: "zoo-clinic", token: "콩이 이름표" },
-      { id: "photographer", name: "민준 사진사", job: "기념사진 부스를 운영하는 사진사", img: "assets/case4-photographer.svg", home: "zoo-photo", token: "사진 부스 시간 기록" },
-      { id: "zookeeper", name: "서아 사육사", job: "동물원 동물들을 돌보는 사육사", img: "assets/case4-zookeeper.svg", home: "zoo-gate", token: "정문 발자국" },
-      { id: "snackkeeper", name: "나래 간식 담당", job: "동물원 간식 수레를 맡은 담당자", img: "assets/case4-snackkeeper.svg", home: "snack-cart", token: "강아지 간식 부스러기" },
+      { id: "trainer", name: "도윤 훈련사", job: "안내견 훈련을 맡은 선생님", img: "assets/case4-trainer.jpg", home: "zoo-yard", token: "씹힌 공과 새 매듭" },
+      { id: "vet", name: "하린 수의사", job: "동물 병원에서 건강을 살피는 수의사", img: "assets/case4-vet.jpg", home: "zoo-clinic", token: "콩이 이름표" },
+      { id: "photographer", name: "민준 사진사", job: "기념사진 부스를 운영하는 사진사", img: "assets/case4-photographer.jpg", home: "zoo-photo", token: "사진 부스 시간 기록" },
+      { id: "zookeeper", name: "서아 사육사", job: "동물원 동물들을 돌보는 사육사", img: "assets/case4-zookeeper.jpg", home: "zoo-gate", token: "정문 발자국" },
+      { id: "snackkeeper", name: "나래 간식 담당", job: "동물원 간식 수레를 맡은 담당자", img: "assets/case4-snackkeeper.jpg", home: "snack-cart", token: "강아지 간식 부스러기" },
     ],
     intro: "동물원 어린이 안내견 강아지 콩이가 사라졌어요. 위험한 일은 아니지만, 누군가 콩이를 조용한 곳으로 데려간 것 같아요. 발자국, 시간 기록, 간식 흔적을 모아 진짜 이유를 찾아보세요.",
     success: "콩이를 무사히 찾았어요! 범인은 콩이를 몰래 데려가려 했지만 단서들이 모두 이어졌어요. 이제 사건 선택 화면으로 돌아가 다른 사건도 해결해 보세요.",
@@ -408,6 +408,7 @@ const cases = [
 
 const PROGRESS_KEY = "detectiveQuestProgressV1";
 const FINALE_KEY = "detectiveQuestFinaleV1";
+const CASE_DISPLAY_ORDER = ["star", "zoo-puppy", "museum-night", "missing-camp"];
 
 const savedProgress = loadProgress();
 let game = { mode: "select" };
@@ -478,10 +479,38 @@ evidencePopup.addEventListener("click", (event) => {
 });
 
 if ("serviceWorker" in navigator) {
+  let refreshingForUpdate = false;
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (refreshingForUpdate) return;
+    refreshingForUpdate = true;
+    window.location.reload();
+  });
+
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js").catch(() => {
-      // The game still works online when service workers are unavailable.
-    });
+    navigator.serviceWorker
+      .register("service-worker.js")
+      .then((registration) => {
+        if (registration.waiting) {
+          registration.waiting.postMessage({ type: "SKIP_WAITING" });
+        }
+        registration.addEventListener("updatefound", () => {
+          const newWorker = registration.installing;
+          newWorker?.addEventListener("statechange", () => {
+            if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+              newWorker.postMessage({ type: "SKIP_WAITING" });
+            }
+          });
+        });
+        registration.update();
+        document.addEventListener("visibilitychange", () => {
+          if (document.visibilityState === "visible") {
+            registration.update();
+          }
+        });
+      })
+      .catch(() => {
+        // The game still works online when service workers are unavailable.
+      });
   });
 }
 
@@ -590,6 +619,7 @@ function showCaseSelect() {
 function renderCaseSelect() {
   const completedCount = completedCases.size;
   const finalReady = completedCount === cases.length && allCaseCulpritsReady();
+  const orderedCases = CASE_DISPLAY_ORDER.map((caseId) => cases.find((caseFile) => caseFile.id === caseId)).filter(Boolean);
   caseSelect.innerHTML = `
     <div class="case-select-heading">
       <div>
@@ -599,7 +629,7 @@ function renderCaseSelect() {
       <span>${completedCount}/${cases.length} 클리어</span>
     </div>
     <div class="case-grid">
-      ${cases.map((caseFile, index) => renderCaseChoice(caseFile, index)).join("")}
+      ${orderedCases.map((caseFile) => renderCaseChoice(caseFile, cases.indexOf(caseFile))).join("")}
       ${renderFinalChoice(finalReady)}
     </div>
   `;
@@ -635,7 +665,25 @@ function renderFinalChoice(finalReady) {
 }
 
 function allCaseCulpritsReady() {
-  return cases.every((caseFile) => solvedCulprits[caseFile.id]);
+  return cases.every((caseFile) => Boolean(getSolvedCulprit(caseFile)));
+}
+
+function getSolvedCulprit(caseFile) {
+  const saved = solvedCulprits[caseFile.id];
+  if (!saved) return null;
+  const suspectId = typeof saved === "string" ? saved : saved.suspectId;
+  const suspect = caseFile.suspects.find((person) => person.id === suspectId);
+  if (!suspect) return null;
+  return {
+    id: `${caseFile.id}-${suspect.id}`,
+    suspectId: suspect.id,
+    caseId: caseFile.id,
+    caseName: caseFile.name,
+    name: suspect.name,
+    job: suspect.job,
+    img: suspect.img,
+    token: suspect.token,
+  };
 }
 
 function startFinalGame() {
@@ -644,7 +692,7 @@ function startFinalGame() {
     return;
   }
 
-  const lineup = cases.map((caseFile) => solvedCulprits[caseFile.id]);
+  const lineup = cases.map((caseFile) => getSolvedCulprit(caseFile));
   const liarIndex = finalSolved ? 0 : Math.floor(Math.random() * lineup.length);
   const liar = lineup[liarIndex];
   const decoy = lineup[(liarIndex + 1) % lineup.length];
@@ -1118,14 +1166,7 @@ function solveCase(suspect) {
   game.latest = `${suspect.name}이 범인이었어요. ${game.case.success}`;
   completedCases.add(game.case.id);
   solvedCulprits[game.case.id] = {
-    id: `${game.case.id}-${suspect.id}`,
     suspectId: suspect.id,
-    caseId: game.case.id,
-    caseName: game.case.name,
-    name: suspect.name,
-    job: suspect.job,
-    img: suspect.img,
-    token: suspect.token,
   };
   saveProgress();
   closePlace();
