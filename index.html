@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#75bdf2" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>반짝별 탐정단</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="game-shell">
+      <section class="topbar" aria-label="게임 정보">
+        <div>
+          <p class="eyebrow">5단계 지도 퀘스트</p>
+          <h1>반짝별 탐정단</h1>
+        </div>
+        <div class="case-card">
+          <img src="assets/star-badge.png" alt="사라진 별 배지" />
+          <div>
+            <span>오늘의 사건</span>
+            <strong>시계탑의 별 배지가 사라졌어요!</strong>
+          </div>
+        </div>
+        <button class="icon-button" id="newGameButton" type="button" aria-label="새 게임">↻</button>
+      </section>
+
+      <section class="quest-board">
+        <aside class="quest-panel" aria-label="퀘스트 단계">
+          <div class="stage-meter" id="stageMeter"></div>
+          <h2 id="stageTitle"></h2>
+          <p id="stageText"></p>
+          <div class="stage-actions" id="stageActions"></div>
+        </aside>
+
+        <section class="map-panel" aria-label="탐정 지도">
+          <img class="map-art" src="assets/quest-map.png" alt="마을 탐정 지도" />
+          <div class="map-pins" id="mapPins"></div>
+        </section>
+      </section>
+
+      <section class="play-area">
+        <section class="suspects" aria-label="용의자 목록" id="suspects"></section>
+        <section class="notebook" aria-label="탐정 수첩">
+          <div class="notebook-heading">
+            <h2>탐정 수첩</h2>
+            <span id="notebookCount">단서 0개</span>
+          </div>
+          <div class="clue-list" id="clueList"></div>
+        </section>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="script.js"></script>
+  </body>
+</html>
