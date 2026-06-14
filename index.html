@@ -6,10 +6,10 @@
     <meta name="theme-color" content="#75bdf2" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <meta name="apple-mobile-web-app-title" content="반짝별 탐정단" />
-    <meta name="application-name" content="반짝별 탐정단" />
+    <meta name="apple-mobile-web-app-title" content="탐정 퀘스트 클럽" />
+    <meta name="application-name" content="탐정 퀘스트 클럽" />
     <meta name="mobile-web-app-capable" content="yes" />
-    <title>반짝별 탐정단</title>
+    <title>탐정 퀘스트 클럽</title>
     <link rel="manifest" href="manifest.json" />
     <link rel="apple-touch-icon" href="assets/icon-192.png" />
     <link rel="stylesheet" href="styles.css" />
@@ -18,19 +18,21 @@
     <main class="game-shell">
       <section class="topbar" aria-label="게임 정보">
         <div>
-          <p class="eyebrow">장소별 추리 게임</p>
-          <h1>반짝별 탐정단</h1>
+          <p class="eyebrow">사건 선택형 추리 게임</p>
+          <h1>탐정 퀘스트 클럽</h1>
         </div>
         <div class="case-card" id="caseCard">
-          <img src="assets/star-badge.png" alt="사라진 별 배지" id="caseImage" />
+          <img src="assets/icon-512.png" alt="탐정 퀘스트 클럽" id="caseImage" />
           <div>
-            <span>오늘의 사건</span>
-            <strong id="caseName">시계탑의 별 배지가 사라졌어요!</strong>
+            <span>사건 파일</span>
+            <strong id="caseName">해결할 사건을 선택하세요</strong>
           </div>
         </div>
         <button class="icon-button" id="newGameButton" type="button" aria-label="새 게임">↻</button>
         <button class="install-button" id="installButton" type="button" hidden>앱 설치</button>
       </section>
+
+      <section class="case-select" id="caseSelect" aria-label="사건 선택"></section>
 
       <section class="quest-board">
         <aside class="quest-panel" aria-label="현재 추리">
@@ -100,6 +102,17 @@
           <p id="evidenceText"></p>
         </div>
         <button class="action-button primary" id="evidenceCloseButton" type="button">좋아!</button>
+      </div>
+    </section>
+
+    <section class="ending-view" id="endingView" aria-label="최종 엔딩" hidden>
+      <div class="ending-sky" aria-hidden="true"></div>
+      <div class="ending-card">
+        <img src="assets/icon-512.png" alt="" />
+        <p class="eyebrow">모든 사건 해결</p>
+        <h2>탐정 퀘스트 클럽 완전 클리어!</h2>
+        <p>네 사건과 마지막 거짓말까지 모두 밝혀냈어요.</p>
+        <button class="action-button primary" id="endingCloseButton" type="button">사건 선택으로 돌아가기</button>
       </div>
     </section>
 

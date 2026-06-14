@@ -302,13 +302,123 @@ const cases = [
       return `"${alibis[suspect.home]}" 다른 단서와 함께 보면 꽤 탄탄한 알리바이예요.`;
     },
   },
+  {
+    id: "zoo-puppy",
+    label: "네 번째 사건",
+    level: "쉬움+",
+    name: "동물원 강아지 실종 사건",
+    title: "동물원 안내견 강아지 콩이가 사라졌어요!",
+    image: "assets/case4-intro.png",
+    mapImg: "assets/case4-intro.png",
+    introImg: "assets/case4-intro.png",
+    successImg: "assets/case4-success.png",
+    failImg: "assets/case4-fail.png",
+    locations: [
+      {
+        id: "zoo-gate",
+        name: "동물원 정문",
+        icon: "🎟️",
+        x: 32,
+        y: 70,
+        focus: "42% 62%",
+        clueSpot: [42, 70],
+        actorSpot: [68, 52],
+        intro: "정문 앞에 빨간 목줄과 작은 발자국이 남아 있어요.",
+        quiz: { question: "강아지가 지나간 흔적을 찾을 때 가장 먼저 볼 것은 무엇일까요?", options: ["발자국", "구름 모양", "기린 무늬"], answer: "발자국" },
+      },
+      {
+        id: "zoo-clinic",
+        name: "동물 병원",
+        icon: "💊",
+        x: 58,
+        y: 62,
+        focus: "56% 58%",
+        clueSpot: [48, 66],
+        actorSpot: [68, 50],
+        intro: "진료대 옆에 콩이 이름표와 건강 기록 카드가 놓여 있어요.",
+        quiz: { question: "동물 병원에서 강아지 이름을 확인할 수 있는 것은 무엇일까요?", options: ["이름표", "입장권", "팝콘 컵"], answer: "이름표" },
+      },
+      {
+        id: "zoo-photo",
+        name: "기념사진 부스",
+        icon: "📷",
+        x: 73,
+        y: 49,
+        focus: "70% 52%",
+        clueSpot: [46, 64],
+        actorSpot: [66, 49],
+        intro: "사진 부스 화면에는 콩이가 누군가를 따라간 시간이 찍혀 있어요.",
+        quiz: { question: "사진 부스에서 시간을 확인할 수 있는 단서는 무엇일까요?", options: ["사진 번호", "간식 봉지", "물그릇"], answer: "사진 번호" },
+      },
+      {
+        id: "zoo-yard",
+        name: "강아지 훈련장",
+        icon: "🦴",
+        x: 50,
+        y: 36,
+        focus: "50% 45%",
+        clueSpot: [44, 62],
+        actorSpot: [67, 50],
+        intro: "훈련장 울타리 옆에 씹힌 공과 새로 묶은 매듭이 보여요.",
+        quiz: { question: "강아지가 좋아해서 따라갈 만한 물건은 무엇일까요?", options: ["씹힌 공", "CCTV 기록", "식물 이름표"], answer: "씹힌 공" },
+      },
+      {
+        id: "snack-cart",
+        name: "간식 수레",
+        icon: "🥨",
+        x: 82,
+        y: 76,
+        focus: "76% 68%",
+        clueSpot: [50, 68],
+        actorSpot: [68, 51],
+        intro: "간식 수레 아래에 강아지 간식 부스러기와 수레 바퀴 자국이 이어져 있어요.",
+        quiz: { question: "강아지를 유인할 수 있는 가장 그럴듯한 것은 무엇일까요?", options: ["강아지 간식", "지도 접기", "사진 배경"], answer: "강아지 간식" },
+      },
+    ],
+    suspects: [
+      { id: "trainer", name: "도윤 훈련사", job: "안내견 훈련을 맡은 선생님", img: "assets/case4-trainer.svg", home: "zoo-yard", token: "씹힌 공과 새 매듭" },
+      { id: "vet", name: "하린 수의사", job: "동물 병원에서 건강을 살피는 수의사", img: "assets/case4-vet.svg", home: "zoo-clinic", token: "콩이 이름표" },
+      { id: "photographer", name: "민준 사진사", job: "기념사진 부스를 운영하는 사진사", img: "assets/case4-photographer.svg", home: "zoo-photo", token: "사진 부스 시간 기록" },
+      { id: "zookeeper", name: "서아 사육사", job: "동물원 동물들을 돌보는 사육사", img: "assets/case4-zookeeper.svg", home: "zoo-gate", token: "정문 발자국" },
+      { id: "snackkeeper", name: "나래 간식 담당", job: "동물원 간식 수레를 맡은 담당자", img: "assets/case4-snackkeeper.svg", home: "snack-cart", token: "강아지 간식 부스러기" },
+    ],
+    intro: "동물원 어린이 안내견 강아지 콩이가 사라졌어요. 위험한 일은 아니지만, 누군가 콩이를 조용한 곳으로 데려간 것 같아요. 발자국, 시간 기록, 간식 흔적을 모아 진짜 이유를 찾아보세요.",
+    success: "콩이를 무사히 찾았어요! 범인은 콩이를 몰래 데려가려 했지만 단서들이 모두 이어졌어요. 이제 사건 선택 화면으로 돌아가 다른 사건도 해결해 보세요.",
+    item(suspect, culprit) {
+      if (suspect.id === culprit.id) {
+        return `${suspect.token}이 콩이가 사라진 길과 정확히 이어져요. 여러 단서를 합치면 ${suspect.name}이 가장 수상해요.`;
+      }
+      return `${suspect.token}은 수상해 보이지만 다른 기록과 맞춰 보면 콩이를 데려간 결정적인 단서는 아니에요. ${suspect.name}은 후보에서 조금 멀어졌어요.`;
+    },
+    alibi(suspect, culprit) {
+      if (suspect.id === culprit.id) {
+        return `"잠깐 혼자 정리하고 있었어요." 하지만 그 시간에 콩이 목줄과 같은 방향의 흔적이 이어졌어요.`;
+      }
+      const alibis = {
+        "zoo-yard": "훈련장에서는 아이들과 함께 공 던지기 수업을 하고 있었어요.",
+        "zoo-clinic": "동물 병원에서는 다른 강아지의 건강 기록을 쓰고 있었어요.",
+        "zoo-photo": "사진 부스에서는 단체 사진 번호를 정리하고 있었어요.",
+        "zoo-gate": "정문에서는 입장 팔찌를 나눠 주는 일을 도와주고 있었어요.",
+        "snack-cart": "간식 수레에서는 주문표를 세고 있었어요.",
+      };
+      return `"${alibis[suspect.home]}" 다른 단서와 맞춰 보면 괜찮은 알리바이예요.`;
+    },
+  },
 ];
 
-let game = {};
+const PROGRESS_KEY = "detectiveQuestProgressV1";
+const FINALE_KEY = "detectiveQuestFinaleV1";
+
+const savedProgress = loadProgress();
+let game = { mode: "select" };
+let completedCases = new Set(savedProgress.completedCases);
+let solvedCulprits = savedProgress.solvedCulprits;
+let finalSolved = savedProgress.finalSolved;
 
 const caseCard = document.querySelector("#caseCard");
 const caseImage = document.querySelector("#caseImage");
 const caseName = document.querySelector("#caseName");
+const caseSelect = document.querySelector("#caseSelect");
 const caseProgress = document.querySelector("#caseProgress");
 const sceneTitle = document.querySelector("#sceneTitle");
 const sceneText = document.querySelector("#sceneText");
@@ -340,12 +450,15 @@ const evidenceType = document.querySelector("#evidenceType");
 const evidenceTitle = document.querySelector("#evidenceTitle");
 const evidenceText = document.querySelector("#evidenceText");
 const installButton = document.querySelector("#installButton");
+const endingView = document.querySelector("#endingView");
+const endingCloseButton = document.querySelector("#endingCloseButton");
 let suppressHotspotUntil = 0;
 let pendingRestartCaseIndex = null;
 let deferredInstallPrompt = null;
 
-document.querySelector("#newGameButton").addEventListener("click", () => startCase(0));
+document.querySelector("#newGameButton").addEventListener("click", showCaseSelect);
 installButton.addEventListener("click", handleInstallClick);
+endingCloseButton.addEventListener("click", closeEnding);
 document.querySelector("#closePlaceButton").addEventListener("click", closePlace);
 document.querySelector("#quizCloseButton").addEventListener("click", closeQuiz);
 document.querySelector("#evidenceCloseButton").addEventListener("click", closeEvidence);
@@ -435,10 +548,131 @@ async function handleInstallClick() {
   showToast("브라우저 메뉴에서 '앱 설치' 또는 '홈 화면에 추가'를 선택하세요.");
 }
 
+function loadProgress() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(PROGRESS_KEY) || "{}");
+    return {
+      completedCases: Array.isArray(saved.completedCases) ? saved.completedCases : [],
+      solvedCulprits: saved.solvedCulprits || {},
+      finalSolved: localStorage.getItem(FINALE_KEY) === "done",
+    };
+  } catch {
+    return { completedCases: [], solvedCulprits: {}, finalSolved: false };
+  }
+}
+
+function saveProgress() {
+  localStorage.setItem(
+    PROGRESS_KEY,
+    JSON.stringify({
+      completedCases: [...completedCases],
+      solvedCulprits,
+    }),
+  );
+  if (finalSolved) {
+    localStorage.setItem(FINALE_KEY, "done");
+  }
+}
+
+function showCaseSelect() {
+  game = { mode: "select" };
+  closePlace();
+  closeQuiz();
+  closeEvidence();
+  hideEnding();
+  document.querySelector(".quest-board").hidden = true;
+  document.querySelector(".play-area").hidden = true;
+  caseSelect.hidden = false;
+  renderCaseHeader();
+  renderCaseSelect();
+}
+
+function renderCaseSelect() {
+  const completedCount = completedCases.size;
+  const finalReady = completedCount === cases.length && allCaseCulpritsReady();
+  caseSelect.innerHTML = `
+    <div class="case-select-heading">
+      <div>
+        <p class="eyebrow">사건 파일</p>
+        <h2>해결할 사건을 고르세요</h2>
+      </div>
+      <span>${completedCount}/${cases.length} 클리어</span>
+    </div>
+    <div class="case-grid">
+      ${cases.map((caseFile, index) => renderCaseChoice(caseFile, index)).join("")}
+      ${renderFinalChoice(finalReady)}
+    </div>
+  `;
+
+  caseSelect.querySelectorAll("[data-case-index]").forEach((button) => {
+    button.addEventListener("click", () => startCase(Number(button.dataset.caseIndex)));
+  });
+  caseSelect.querySelector("[data-final-game]")?.addEventListener("click", startFinalGame);
+}
+
+function renderCaseChoice(caseFile, index) {
+  const cleared = completedCases.has(caseFile.id);
+  return `
+    <button class="case-choice ${cleared ? "cleared" : ""}" type="button" data-case-index="${index}">
+      <img src="${caseFile.image}" alt="${caseFile.name}" />
+      <span class="case-status">${cleared ? "클리어" : caseFile.level}</span>
+      <strong>${caseFile.name}</strong>
+      <small>${caseFile.title}</small>
+    </button>
+  `;
+}
+
+function renderFinalChoice(finalReady) {
+  const locked = !finalReady && !finalSolved;
+  return `
+    <button class="case-choice final-choice ${finalSolved ? "cleared" : ""}" type="button" data-final-game ${locked ? "disabled" : ""}>
+      <img src="assets/icon-512.png" alt="최종 추리" />
+      <span class="case-status">${finalSolved ? "완전 클리어" : finalReady ? "최종 개방" : "잠김"}</span>
+      <strong>최종 거짓말 게임</strong>
+      <small>네 사건의 범인이 한자리에 모입니다. 세 명은 진실, 한 명은 거짓말을 해요.</small>
+    </button>
+  `;
+}
+
+function allCaseCulpritsReady() {
+  return cases.every((caseFile) => solvedCulprits[caseFile.id]);
+}
+
+function startFinalGame() {
+  if (!finalSolved && (!completedCases.size || completedCases.size < cases.length || !allCaseCulpritsReady())) {
+    showToast("네 사건을 모두 클리어하면 열려요.");
+    return;
+  }
+
+  const lineup = cases.map((caseFile) => solvedCulprits[caseFile.id]);
+  const liarIndex = finalSolved ? 0 : Math.floor(Math.random() * lineup.length);
+  const liar = lineup[liarIndex];
+  const decoy = lineup[(liarIndex + 1) % lineup.length];
+  game = {
+    mode: "final",
+    finalLineup: lineup.map((culprit, index) => ({
+      ...culprit,
+      statement:
+        index === liarIndex
+          ? `진짜 범인은 제가 아니라 ${decoy.name}예요. 저는 그저 지나가던 중이었어요.`
+          : `진짜 범인은 ${liar.name}예요. 네 사건의 단서가 모두 그쪽을 가리켜요.`,
+      truth: index !== liarIndex,
+    })),
+    finalCulpritId: liar.id,
+  };
+  caseSelect.hidden = true;
+  document.querySelector(".quest-board").hidden = false;
+  document.querySelector(".play-area").hidden = false;
+  closePlace();
+  closeQuiz();
+  render();
+}
+
 function startCase(caseIndex) {
   const selectedCase = cases[caseIndex];
   const culprit = selectedCase.suspects[Math.floor(Math.random() * selectedCase.suspects.length)];
   game = {
+    mode: "case",
     caseIndex,
     case: selectedCase,
     culpritId: culprit.id,
@@ -451,6 +685,9 @@ function startCase(caseIndex) {
     latest: selectedCase.intro,
     solved: false,
   };
+  caseSelect.hidden = true;
+  document.querySelector(".quest-board").hidden = false;
+  document.querySelector(".play-area").hidden = false;
   closePlace();
   closeQuiz();
   render();
@@ -491,6 +728,15 @@ function canJudgeCurrent() {
 }
 
 function render() {
+  if (game.mode === "select") {
+    renderCaseHeader();
+    renderCaseSelect();
+    return;
+  }
+  if (game.mode === "final") {
+    renderFinalGame();
+    return;
+  }
   renderCaseHeader();
   renderScene();
   renderMap();
@@ -499,10 +745,64 @@ function render() {
 }
 
 function renderCaseHeader() {
+  if (!game.case) {
+    caseImage.src = "assets/icon-512.png";
+    caseImage.alt = "탐정 퀘스트 클럽";
+    caseName.textContent = finalSolved ? "모든 사건을 완전히 해결했어요!" : "네 사건 중 하나를 골라 단서를 모으세요.";
+    caseCard.classList.toggle("done", finalSolved);
+    return;
+  }
   caseImage.src = game.case.image;
   caseImage.alt = game.case.name;
   caseName.textContent = game.case.title;
   caseCard.classList.toggle("done", game.solved);
+}
+
+function renderFinalGame() {
+  const lineup = game.finalLineup;
+  const truthCount = lineup.filter((person) => person.truth).length;
+  caseImage.src = "assets/icon-512.png";
+  caseImage.alt = "최종 추리";
+  caseName.textContent = "세 명의 진실과 한 명의 거짓말";
+  caseCard.classList.remove("done");
+  caseProgress.textContent = "최종 게임";
+  sceneTitle.textContent = "범인들의 마지막 모임";
+  sceneText.textContent = "네 사건의 범인들이 한 장소에 모였어요. 세 명은 진실을 말하고, 한 명만 거짓말을 합니다. 거짓말을 하는 사람이 마지막 진짜 범인이에요.";
+  sceneActions.innerHTML = "";
+  addAction("사건 선택으로 돌아가기", showCaseSelect, false, false);
+  mapImage.src = "assets/icon-512.png";
+  mapImage.alt = "최종 추리";
+  mapPins.innerHTML = "";
+  suspectsEl.innerHTML = lineup
+    .map(
+      (person) => `
+        <button class="suspect-card selected final-suspect" type="button" data-final-suspect="${person.id}">
+          <div class="portrait-wrap">
+            <img src="${person.img}" alt="${person.name}" />
+            <span class="badge">?</span>
+          </div>
+          <div class="suspect-info">
+            <strong>${person.name}</strong>
+            <span>${person.caseName}</span>
+          </div>
+        </button>
+      `,
+    )
+    .join("");
+  suspectsEl.querySelectorAll("[data-final-suspect]").forEach((button) => {
+    button.addEventListener("click", () => judgeFinal(button.dataset.finalSuspect));
+  });
+  deductionCount.textContent = `${truthCount}명 진실`;
+  deductionScreen.innerHTML = lineup
+    .map(
+      (person) => `
+        <div class="radar-card final-statement">
+          <strong>${person.name}</strong>
+          ${person.statement}
+        </div>
+      `,
+    )
+    .join("");
 }
 
 function renderScene() {
@@ -530,14 +830,8 @@ function renderScene() {
   addAction("범인이다", () => judge(true), game.solved || !canJudgeCurrent(), false);
   addAction("아니다, 다음 장소로", () => judge(false), game.solved || !canJudgeCurrent(), false);
 
-  if (game.solved && game.caseIndex === 0) {
-    addAction("두 번째 사건 시작", () => startCase(1), false, true);
-  }
-  if (game.solved && game.caseIndex === 1) {
-    addAction("세 번째 사건 시작", () => startCase(2), false, true);
-  }
-  if (game.solved && game.caseIndex === 2) {
-    addAction("처음부터 다시", () => startCase(0), false, true);
+  if (game.solved) {
+    addAction("사건 선택으로 돌아가기", showCaseSelect, false, true);
   }
 }
 
@@ -822,6 +1116,18 @@ function judge(accuse) {
 function solveCase(suspect) {
   game.solved = true;
   game.latest = `${suspect.name}이 범인이었어요. ${game.case.success}`;
+  completedCases.add(game.case.id);
+  solvedCulprits[game.case.id] = {
+    id: `${game.case.id}-${suspect.id}`,
+    suspectId: suspect.id,
+    caseId: game.case.id,
+    caseName: game.case.name,
+    name: suspect.name,
+    job: suspect.job,
+    img: suspect.img,
+    token: suspect.token,
+  };
+  saveProgress();
   closePlace();
   document.querySelector(".game-shell").classList.add("celebrate");
   showEvidence("사건 해결", suspect.name, game.case.success, "✓", game.case.successImg);
@@ -853,7 +1159,37 @@ function closeEvidence() {
     const nextCaseIndex = pendingRestartCaseIndex;
     pendingRestartCaseIndex = null;
     startCase(nextCaseIndex);
+    return;
   }
+  if (game.mode === "case" && game.solved) {
+    showCaseSelect();
+  }
+}
+
+function judgeFinal(suspectId) {
+  if (suspectId !== game.finalCulpritId) {
+    showToast("그 사람의 말은 논리적으로 맞아요. 한 명만 거짓말한다는 조건을 다시 보세요.");
+    return;
+  }
+
+  finalSolved = true;
+  saveProgress();
+  showFinalEnding();
+}
+
+function showFinalEnding() {
+  endingView.hidden = false;
+  endingView.querySelector(".ending-sky").innerHTML = Array.from({ length: 28 }, (_, index) => `<span style="--i:${index}"></span>`).join("");
+}
+
+function hideEnding() {
+  endingView.hidden = true;
+  endingView.querySelector(".ending-sky").innerHTML = "";
+}
+
+function closeEnding() {
+  hideEnding();
+  showCaseSelect();
 }
 
 function showToast(message) {
@@ -863,4 +1199,4 @@ function showToast(message) {
   showToast.timer = setTimeout(() => toast.classList.remove("show"), 1900);
 }
 
-startCase(0);
+showCaseSelect();

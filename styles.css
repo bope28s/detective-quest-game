@@ -161,6 +161,132 @@ h1 {
   align-items: stretch;
 }
 
+.quest-board[hidden],
+.play-area[hidden] {
+  display: none;
+}
+
+.case-select {
+  display: grid;
+  gap: 16px;
+}
+
+.case-select[hidden] {
+  display: none;
+}
+
+.case-select-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: end;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: var(--shadow);
+}
+
+.case-select-heading h2 {
+  margin-bottom: 0;
+  font-size: 1.55rem;
+}
+
+.case-select-heading span {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #f7f8fb;
+  font-weight: 900;
+}
+
+.case-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(170px, 1fr));
+  gap: 14px;
+}
+
+.case-choice {
+  position: relative;
+  overflow: hidden;
+  min-height: 310px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+  box-shadow: var(--shadow);
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease,
+    border-color 150ms ease;
+}
+
+.case-choice:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 212, 90, 0.95);
+  box-shadow: 0 18px 36px rgba(36, 48, 68, 0.16);
+}
+
+.case-choice:disabled {
+  cursor: not-allowed;
+  opacity: 0.62;
+  filter: grayscale(0.2);
+}
+
+.case-choice img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  display: block;
+  object-fit: cover;
+}
+
+.case-choice strong,
+.case-choice small {
+  display: block;
+  padding: 0 12px;
+}
+
+.case-choice strong {
+  margin-top: 14px;
+  font-size: 1.08rem;
+  line-height: 1.2;
+}
+
+.case-choice small {
+  margin-top: 8px;
+  color: #60708c;
+  font-size: 0.84rem;
+  font-weight: 800;
+  line-height: 1.38;
+}
+
+.case-status {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(255, 253, 245, 0.94);
+  box-shadow: 0 8px 18px rgba(36, 48, 68, 0.18);
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.case-choice.cleared {
+  border-color: rgba(95, 193, 120, 0.95);
+}
+
+.case-choice.cleared .case-status {
+  color: #174526;
+  background: #dff9e8;
+}
+
+.final-choice {
+  border-color: rgba(180, 116, 232, 0.45);
+}
+
 .quest-panel,
 .deduction-panel {
   border: 1px solid var(--line);
@@ -320,6 +446,10 @@ h1 {
 
 .suspect-card.cleared {
   border-color: rgba(95, 193, 120, 0.9);
+}
+
+.final-suspect {
+  cursor: pointer;
 }
 
 .portrait-wrap {
@@ -896,6 +1026,65 @@ h1 {
   transform: translate(-50%, 0);
 }
 
+.ending-view {
+  position: fixed;
+  z-index: 60;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: 18px;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(255, 212, 90, 0.34), transparent 22rem),
+    linear-gradient(145deg, rgba(36, 48, 68, 0.96), rgba(27, 42, 63, 0.96));
+}
+
+.ending-view[hidden] {
+  display: none;
+}
+
+.ending-card {
+  position: relative;
+  z-index: 2;
+  width: min(520px, 100%);
+  padding: 24px;
+  border-radius: 8px;
+  background: #fffdf5;
+  box-shadow: 0 28px 80px rgba(14, 21, 34, 0.4);
+  text-align: center;
+  animation: finaleCard 700ms ease-out;
+}
+
+.ending-card img {
+  width: 128px;
+  aspect-ratio: 1;
+  border-radius: 28px;
+  box-shadow: 0 18px 42px rgba(36, 48, 68, 0.24);
+  animation: finaleBadge 1.7s ease-in-out infinite;
+}
+
+.ending-card h2 {
+  margin: 14px 0 8px;
+  font-size: 2rem;
+}
+
+.ending-card p {
+  color: #4c5871;
+  line-height: 1.5;
+}
+
+.ending-sky span {
+  position: absolute;
+  top: -20px;
+  left: calc((var(--i) * 37px) % 100vw);
+  width: 12px;
+  height: 22px;
+  border-radius: 4px;
+  background: hsl(calc(var(--i) * 47), 80%, 65%);
+  animation: confettiFall calc(2.6s + (var(--i) % 5) * 0.22s) linear infinite;
+  animation-delay: calc(var(--i) * -0.13s);
+}
+
 .celebrate {
   animation: pop 480ms ease;
 }
@@ -903,6 +1092,25 @@ h1 {
 @keyframes pop {
   50% {
     transform: scale(1.035);
+  }
+}
+
+@keyframes finaleCard {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.94);
+  }
+}
+
+@keyframes finaleBadge {
+  50% {
+    transform: translateY(-8px) rotate(-3deg);
+  }
+}
+
+@keyframes confettiFall {
+  to {
+    transform: translateY(110vh) rotate(540deg);
   }
 }
 
@@ -952,6 +1160,10 @@ h1 {
     max-width: none;
   }
 
+  .case-grid {
+    grid-template-columns: repeat(2, minmax(170px, 1fr));
+  }
+
   .icon-button {
     position: absolute;
     right: 14px;
@@ -980,6 +1192,15 @@ h1 {
 
   .install-button {
     width: 100%;
+  }
+
+  .case-select-heading {
+    display: grid;
+    align-items: start;
+  }
+
+  .case-grid {
+    grid-template-columns: 1fr;
   }
 
   .case-card {
