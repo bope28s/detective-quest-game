@@ -681,6 +681,10 @@ h1 {
   animation: discoveryIn 220ms ease-out;
 }
 
+.clue-discovery[hidden] {
+  display: none;
+}
+
 .clue-discovery.item {
   border-color: rgba(95, 193, 120, 0.95);
   background: rgba(242, 255, 246, 0.97);
@@ -702,6 +706,14 @@ h1 {
 .clue-discovery strong {
   display: block;
   margin-bottom: 4px;
+}
+
+.dismiss-hint {
+  display: block;
+  margin-top: 7px;
+  color: #66738b;
+  font-size: 0.78rem;
+  font-weight: 900;
 }
 
 .close-button {

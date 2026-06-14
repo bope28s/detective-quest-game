@@ -161,8 +161,10 @@ document.querySelector("#quizCloseButton").addEventListener("click", closeQuiz);
 document.querySelector("#evidenceCloseButton").addEventListener("click", closeEvidence);
 clueHotspot.addEventListener("click", inspectCurrent);
 suspectActor.addEventListener("click", hearCurrent);
-clueDiscovery.addEventListener("click", () => {
+clueDiscovery.addEventListener("click", (event) => {
+  event.stopPropagation();
   clueDiscovery.hidden = true;
+  clueDiscovery.classList.remove("item");
 });
 placeBubble.addEventListener("click", () => {
   placeBubble.hidden = true;
@@ -438,7 +440,7 @@ function showPlaceBubble(title, text) {
 function showClueDiscovery(title, text) {
   const location = currentLocation();
   positionClueDiscovery(location);
-  clueDiscovery.innerHTML = `<strong>${title}</strong>${text}`;
+  clueDiscovery.innerHTML = `<strong>${title}</strong>${text}<span class="dismiss-hint">다시 누르면 닫혀요</span>`;
   clueDiscovery.hidden = false;
 }
 
