@@ -56,24 +56,22 @@
 
     <section class="place-view" id="placeView" aria-label="세부 장소" hidden>
       <div class="place-dialog">
-        <div class="place-hero">
-          <img src="assets/quest-map.png" alt="" />
+        <div class="place-hero" id="placeScene">
+          <img src="assets/quest-map.png" alt="" id="placeSceneImage" />
+          <button class="clue-hotspot" id="clueHotspot" type="button" aria-label="현장 단서 조사하기">
+            <span></span>
+          </button>
+          <button class="suspect-actor" id="suspectActor" type="button" aria-label="용의자와 대화하기">
+            <img id="placeSuspectImage" src="assets/baker.png" alt="" />
+          </button>
+          <div class="place-bubble" id="placeBubble" hidden></div>
           <button class="close-button" id="closePlaceButton" type="button" aria-label="지도 화면으로 돌아가기">×</button>
         </div>
         <div class="place-content">
           <p class="eyebrow" id="placeStep">세부 장소</p>
           <h2 id="placeName"></h2>
           <p id="placeIntro"></p>
-          <div class="detail-grid">
-            <section>
-              <h3>현장 단서</h3>
-              <div class="detail-actions" id="placeClues"></div>
-            </section>
-            <section>
-              <h3>용의자 대화</h3>
-              <div class="detail-actions" id="placeAlibis"></div>
-            </section>
-          </div>
+          <div class="scene-tip" id="sceneTip"></div>
         </div>
       </div>
     </section>

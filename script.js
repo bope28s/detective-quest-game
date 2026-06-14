@@ -1,9 +1,9 @@
 const locations = [
-  { id: "bakery", name: "별빛 빵집", icon: "★", x: 18, y: 62, intro: "고소한 쿠키 냄새가 가득한 빵집이에요." },
-  { id: "library", name: "무지개 도서관", icon: "◆", x: 35, y: 31, intro: "책장 사이가 조용해서 작은 소리도 잘 들려요." },
-  { id: "park", name: "연못 공원", icon: "●", x: 53, y: 69, intro: "연못과 꽃밭 사이에 발자국이 남기 쉬워요." },
-  { id: "toyshop", name: "빙글 장난감점", icon: "■", x: 75, y: 52, intro: "태엽 장난감과 인형 무대가 놓인 가게예요." },
-  { id: "clocktower", name: "시계탑 광장", icon: "▲", x: 82, y: 24, intro: "마을 사람들이 시간을 확인하러 모이는 광장이에요." },
+  { id: "bakery", name: "별빛 빵집", icon: "★", x: 18, y: 62, focus: "18% 48%", clueSpot: [36, 70], actorSpot: [64, 54], intro: "고소한 쿠키 냄새가 가득한 빵집이에요." },
+  { id: "library", name: "무지개 도서관", icon: "◆", x: 35, y: 31, focus: "78% 30%", clueSpot: [39, 61], actorSpot: [67, 50], intro: "책장 사이가 조용해서 작은 소리도 잘 들려요." },
+  { id: "park", name: "연못 공원", icon: "●", x: 53, y: 69, focus: "24% 80%", clueSpot: [40, 64], actorSpot: [68, 52], intro: "연못과 꽃밭 사이에 발자국이 남기 쉬워요." },
+  { id: "toyshop", name: "빙글 장난감점", icon: "■", x: 75, y: 52, focus: "82% 76%", clueSpot: [42, 58], actorSpot: [68, 48], intro: "태엽 장난감과 인형 무대가 놓인 가게예요." },
+  { id: "clocktower", name: "시계탑 광장", icon: "▲", x: 82, y: 24, focus: "52% 48%", clueSpot: [48, 68], actorSpot: [68, 44], intro: "마을 사람들이 시간을 확인하러 모이는 광장이에요." },
 ];
 
 const suspects = [
@@ -80,11 +80,15 @@ const deductionScreen = document.querySelector("#deductionScreen");
 const deductionCount = document.querySelector("#deductionCount");
 const toast = document.querySelector("#toast");
 const placeView = document.querySelector("#placeView");
+const placeSceneImage = document.querySelector("#placeSceneImage");
 const placeName = document.querySelector("#placeName");
 const placeIntro = document.querySelector("#placeIntro");
 const placeStep = document.querySelector("#placeStep");
-const placeClues = document.querySelector("#placeClues");
-const placeAlibis = document.querySelector("#placeAlibis");
+const clueHotspot = document.querySelector("#clueHotspot");
+const suspectActor = document.querySelector("#suspectActor");
+const placeSuspectImage = document.querySelector("#placeSuspectImage");
+const placeBubble = document.querySelector("#placeBubble");
+const sceneTip = document.querySelector("#sceneTip");
 const evidencePopup = document.querySelector("#evidencePopup");
 const evidenceIcon = document.querySelector("#evidenceIcon");
 const evidenceType = document.querySelector("#evidenceType");
@@ -94,6 +98,8 @@ const evidenceText = document.querySelector("#evidenceText");
 document.querySelector("#newGameButton").addEventListener("click", () => startCase(0));
 document.querySelector("#closePlaceButton").addEventListener("click", closePlace);
 document.querySelector("#evidenceCloseButton").addEventListener("click", closeEvidence);
+clueHotspot.addEventListener("click", inspectCurrent);
+suspectActor.addEventListener("click", hearCurrent);
 placeView.addEventListener("click", (event) => {
   if (event.target === placeView) closePlace();
 });
@@ -275,23 +281,22 @@ function openPlace(location) {
   const suspect = currentSuspect();
   placeStep.textContent = `${game.case.name} · ${game.case.level}`;
   placeName.textContent = location.name;
-  placeIntro.textContent = `${location.intro} 오늘은 ${suspect.name}을 만났어요.`;
-  placeClues.innerHTML = "";
-  placeAlibis.innerHTML = "";
-
-  const clueButton = document.createElement("button");
-  clueButton.className = `detail-button ${game.inspected.has(suspect.id) ? "done" : ""}`;
-  clueButton.type = "button";
-  clueButton.textContent = `${game.inspected.has(suspect.id) ? "확인함" : "조사하기"}: 현장 단서`;
-  clueButton.addEventListener("click", () => inspectCurrent());
-  placeClues.appendChild(clueButton);
-
-  const alibiButton = document.createElement("button");
-  alibiButton.className = `detail-button ${game.heard.has(suspect.id) ? "done" : ""}`;
-  alibiButton.type = "button";
-  alibiButton.textContent = `${game.heard.has(suspect.id) ? "들음" : "듣기"}: ${suspect.name}의 알리바이`;
-  alibiButton.addEventListener("click", () => hearCurrent());
-  placeAlibis.appendChild(alibiButton);
+  placeIntro.textContent = `${location.intro} 화면 안의 반짝이는 곳을 조사하고, ${suspect.name}을 직접 눌러 대화하세요.`;
+  placeSceneImage.style.objectPosition = location.focus;
+  clueHotspot.style.left = `${location.clueSpot[0]}%`;
+  clueHotspot.style.top = `${location.clueSpot[1]}%`;
+  suspectActor.style.left = `${location.actorSpot[0]}%`;
+  suspectActor.style.top = `${location.actorSpot[1]}%`;
+  placeSuspectImage.src = suspect.img;
+  placeSuspectImage.alt = `${suspect.name} 초상화`;
+  clueHotspot.classList.toggle("done", game.inspected.has(suspect.id));
+  suspectActor.classList.toggle("done", game.heard.has(suspect.id));
+  sceneTip.textContent = game.inspected.has(suspect.id) && game.heard.has(suspect.id)
+    ? "단서와 알리바이를 모두 확인했어요. 바깥 화면에서 추리 선택을 해 보세요."
+    : "반짝이는 조사 지점과 용의자를 둘 다 눌러야 추리할 수 있어요.";
+  if (placeBubble.hidden) {
+    placeBubble.innerHTML = `<strong>${location.name}에 들어왔어요</strong>주변을 살펴보고 ${suspect.name}에게 말을 걸어 보세요.`;
+  }
 
   placeView.hidden = false;
   render();
@@ -299,6 +304,7 @@ function openPlace(location) {
 
 function closePlace() {
   placeView.hidden = true;
+  placeBubble.hidden = true;
 }
 
 function inspectCurrent() {
@@ -306,7 +312,7 @@ function inspectCurrent() {
   const clue = game.case.clue(suspect, currentCulprit());
   game.inspected.add(suspect.id);
   game.latest = clue;
-  showEvidence("현장 단서", `${suspect.name} 주변`, clue, suspect.id === game.culpritId ? "!" : "★");
+  showPlaceBubble(suspect.id === game.culpritId ? "중요한 흔적!" : "현장 조사", clue);
   openPlace(currentLocation());
 }
 
@@ -315,8 +321,13 @@ function hearCurrent() {
   const alibi = game.case.alibi(suspect, currentCulprit());
   game.heard.add(suspect.id);
   game.latest = alibi;
-  showEvidence("알리바이 대화", suspect.name, alibi, "“”");
+  showPlaceBubble(`${suspect.name}의 말`, alibi);
   openPlace(currentLocation());
+}
+
+function showPlaceBubble(title, text) {
+  placeBubble.innerHTML = `<strong>${title}</strong>${text}`;
+  placeBubble.hidden = false;
 }
 
 function judge(accuse) {
